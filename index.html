@@ -13,11 +13,13 @@
 		<h1>Flickr Searcher</h1>
 	</header>
 	<section class="search-section">
-	<form>
-		<input type="text" placeholder="Enter a tag to search for..">
+	<form ng-submit="">
+		<input ng-model="data.tag" type="text" placeholder="Enter a tag to search for..">
 		<input class="submit" type="submit" value="Submit">
 	</form>
 	</section>
-	<section class="results-section"></section>
+	<section class="results-section">
+		<div ng-if ="" class="notify-searching">Searching Flickr for photos tagged with 'placeholder'.</div>
+	</section>
 </body>
 </html>
