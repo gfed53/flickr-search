@@ -3,7 +3,11 @@ angular.module("FlickrApp", [])
 
 	$scope.searchFlickr = function(tag){
 		console.log("searching");
-		$scope.tag = tag;
+		$scope.results = undefined;
+		$scope.tagToSearch = $scope.tag;
+		$scope.tagToSearch = tag;
+		$scope.notifyResults = false;
+		$scope.error = false;
 		$scope.notifySearch = true;
 		var url = "https://api.flickr.com/services/rest",
 		params = {
@@ -24,10 +28,14 @@ angular.module("FlickrApp", [])
 			$scope.notifyResults = true;
 			console.log(response.data.photos.photo);
 			$scope.results = response.data.photos.photo;
+			
 		},
 		function(response){
 			alert('error');
 			$scope.error = true;
+		})
+		.then(function(){
+			$scope.tag = "";
 		});
 
 

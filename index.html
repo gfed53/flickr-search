@@ -13,16 +13,16 @@
 		<h1>Flickr Searcher</h1>
 	</header>
 	<section class="search-section">
-	<form ng-submit="searchFlickr(tag)">
-		<input ng-model="tag" type="text" placeholder="Enter a tag to search for.." required>
+	<form name="myForm" ng-submit="searchFlickr(tag)">
+		<input class="search-form" ng-model="tag" type="text" placeholder="Enter a tag to search for.." required>
 		<input class="submit" type="submit" value="Submit">
 	</form>
 	</section>
 	<section class="results-section">
-		<div ng-if="notifySearch" class="notify-searching">Searching Flickr for photos tagged with {{ tag }}.</div>
+		<div ng-if="notifySearch" class="notify-searching">Searching Flickr for photos tagged with {{ tagToSearch }}.</div>
 		<div ng-if="error" class="notify-error">Sorry, an error occured.</div>
-		<div ng-if="notifyResults" class="notify-results">We found {{ results.length }} results for {{ tag }}.</div>
-		<div ng-repeat="result in results" class="results">
+		<div ng-if="notifyResults" class="notify-results">We found {{ results.length }} results for {{ tagToSearch }}.</div>
+		<div ng-show="myForm.$submitted" ng-repeat="result in results" class="results">
 			<img ng-src="https://farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture">
 		</div>
 	</section>
