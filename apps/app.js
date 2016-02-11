@@ -23,7 +23,7 @@ angular.module("FlickrApp", [])
 			$scope.notifySearch = false;
 			$scope.notifyResults = true;
 			console.log(response.data.photos.photo);
-			// $scope.results = response.data.items;
+			$scope.results = response.data.photos.photo;
 		},
 		function(response){
 			alert('error');

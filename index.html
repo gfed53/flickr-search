@@ -21,8 +21,10 @@
 	<section class="results-section">
 		<div ng-if="notifySearch" class="notify-searching">Searching Flickr for photos tagged with {{ tag }}.</div>
 		<div ng-if="error" class="notify-error">Sorry, an error occured.</div>
-		<div ng-if="notifyResults" class="notify-results">We found number results for {{ tag }}.</div>
-		<div class="results"></div>
+		<div ng-if="notifyResults" class="notify-results">We found {{ results.length }} results for {{ tag }}.</div>
+		<div ng-repeat="result in results" class="results">
+			<img ng-src="https://farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture">
+		</div>
 	</section>
 </body>
 </html>
