@@ -1,5 +1,9 @@
+body {
+	background-color: #ecf0f1;
+}
+
 header, .search-section, .results-section {
-	margin: 0 auto;
+	margin: 4em auto;
 	text-align: center;
 }
 
@@ -9,6 +13,9 @@ header {
 
 header h1 {
 	font-size: 5em;
+	font-family: "Montserrat", sans-serif;
+	font-weight: bold;
+	margin: 0;
 }
 
 .submit {
@@ -17,6 +24,11 @@ header h1 {
 
 .results-section {
 	margin-top: 3em;
+}
+
+.notify-results {
+	padding-top: 2em;
+	border-top: 2px solid crimson;
 }
 
 .notify {
