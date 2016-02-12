@@ -1,4 +1,4 @@
-angular.module("FlickrApp", [])
+angular.module("FlickrApp", ['ngAnimate'])
 .controller("FlickrCtrl", ['$scope', '$timeout', '$q', '$http', function($scope, $timeout, $q, $http){
 
 	$scope.searchFlickr = function(tag){

@@ -18,3 +18,12 @@ header h1 {
 .results-section {
 	margin-top: 3em;
 }
+
+.results {
+	display: inline-block;
+	margin: 1em;
+}
+
+.results img {
+	width: 20em;
+}
