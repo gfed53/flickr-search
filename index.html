@@ -18,12 +18,14 @@
 	</form>
 	</section>
 	<section class="results-section">
-		<div ng-if="notifySearch" class="notify-searching">Searching Flickr for photos tagged with {{ tagToSearch }}.</div>
-		<div ng-if="error" class="notify-error">Sorry, an error occured.</div>
-		<div ng-if="notifyResults" class="notify-results">We found {{ results.length }} results for {{ tagToSearch }}.</div>
-		<div ng-show="myForm.$submitted" ng-repeat="result in results" class="results">
-			<img ng-src="https://farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture">
-		</div>
+		<div ng-if="notifySearch" class="notify notify-searching">Searching Flickr for photos tagged with {{ tagToSearch }}.</div>
+		<div ng-if="error" class="notify notify-error">Sorry, an error occured.</div>
+		<div ng-if="notifyResults" class="notify notify-results">We found {{ results.length }} results for {{ tagToSearch }}.</div>
+		<!-- <div ng-if="notifyResults" class="wrapper"> -->
+			<div ng-show="myForm.$submitted" ng-repeat="result in results" class="results">
+				<img ng-src="https://farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture">
+			</div>
+		<!-- </div> -->
 	</section>
 	 <script type="text/javascript" src="https://code.angularjs.org/1.3.10/angular-animate.min.js"></script>
     <script src="apps/app.js"></script>
