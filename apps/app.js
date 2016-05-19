@@ -2,7 +2,6 @@ angular.module("FlickrApp", ['ngAnimate'])
 .controller("FlickrCtrl", ['$scope', '$timeout', '$q', '$http', function($scope, $timeout, $q, $http){
 
 	$scope.searchFlickr = function(tag){
-		console.log("searching");
 		$scope.results = undefined;
 		$scope.tagToSearch = $scope.tag;
 		$scope.tagToSearch = tag;
@@ -26,12 +25,11 @@ angular.module("FlickrApp", ['ngAnimate'])
 		.then(function(response){
 			$scope.notifySearch = false;
 			$scope.notifyResults = true;
-			console.log(response.data.photos.photo);
 			$scope.results = response.data.photos.photo;
 			
 		},
 		function(response){
-			alert('error');
+			alert('Sorry, an error occurred.');
 			$scope.error = true;
 		})
 		.then(function(){

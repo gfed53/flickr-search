@@ -18,8 +18,9 @@ header h1 {
 	margin: 0;
 }
 
-.submit {
-	font-size: 1.5em;
+#search-term {
+	max-width: 40em;
+	margin: 0 auto;
 }
 
 .results-section {
@@ -30,13 +31,13 @@ header h1 {
 	padding-top: 2em;
 	border-top: 2px solid crimson;
 }
-
+ 
 .notify {
-	transition: 1s linear all;
+	transition: 500ms linear all;
 }
 
 .wrapper {
-	transition: 0.5s linear all;
+	transition: 500ms linear all;
 }
 
 .results {
@@ -75,7 +76,7 @@ header h1 {
 
 .results.ng-enter-stagger,
 .results.ng-leave-stagger {
-    transition-delay: 0.2s;
+    transition-delay: 200ms;
 }
 
 
