@@ -1,0 +1,21 @@
+{
+  "name": "flickr-search",
+  "description": "The Flickr Searcher app retrieves search results from Flickr's API using GET requests via AngularJS's $http service.",
+  "main": "index.js",
+  "authors": [
+    "gfed53 <gfederico7153@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/gfed53/flickr-search",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-simple-logger": "^0.1.7",
+    "angular-google-maps": "^2.3.3"
+  }
+}

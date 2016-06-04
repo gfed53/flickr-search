@@ -18,6 +18,10 @@ header h1 {
 	margin: 0;
 }
 
+#map {
+	height: 15em;
+}
+
 #search-term {
 	max-width: 40em;
 	margin: 0 auto;
@@ -78,6 +82,10 @@ header h1 {
 .results.ng-leave-stagger {
     transition-delay: 200ms;
 }
+
+/*Media Queries*/
+
+
 
 
 
