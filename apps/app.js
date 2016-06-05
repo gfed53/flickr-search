@@ -47,10 +47,12 @@ angular.module("FlickrApp", ['ngAnimate'])
 
 		var url = "https://api.flickr.com/services/rest",
 		params = {
-			method: 'flickr.photos.search',
+			method: "flickr.photos.search",
 			api_key: "a35c104c1a7f9762e0f6cdf064f39657",
-			tags: tag,
-			format: 'json',
+			tags: "outdoor, -people, -portrait, "+ tag,
+			tag_mode: "all",
+			safe_search: 1,
+			format: "json",
 			nojsoncallback: 1
 		};
 
@@ -63,6 +65,7 @@ angular.module("FlickrApp", ['ngAnimate'])
 			vm.notifySearch = false;
 			vm.notifyResults = true;
 			vm.results = response.data.photos.photo;
+			console.log(vm.results);
 			
 		},
 		function(response){

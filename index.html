@@ -36,7 +36,7 @@
 		<div ng-if="flickr.error" class="notify notify-error">Sorry, an error occured.</div>
 		<div ng-if="flickr.notifyResults" class="notify notify-results">We found {{ flickr.results.length }} results for {{ flickr.tagToSearch }}.</div>
 		<div ng-show="myForm.$submitted" ng-repeat="result in flickr.results" class="results">
-			<img ng-src="https://farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture">
+			<a target="_blank" href="https://www.flickr.com/photos/{{ result.owner }}/{{ result.id }}"><img ng-src="https://farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture"></a>
 		</div>
 	</section>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
