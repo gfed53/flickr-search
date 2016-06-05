@@ -19,7 +19,9 @@ header h1 {
 }
 
 #map {
-	height: 15em;
+	height: 30em;
+	width: 75%;
+	margin: 0 auto;
 }
 
 #search-term {

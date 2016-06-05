@@ -1,11 +1,14 @@
 angular.module("FlickrApp", ['ngAnimate'])
-.controller("FlickrCtrl", ['$scope', '$timeout', '$q', '$http', function($scope, $timeout, $q, $http){
-	$scope.initMap = initMap;
-	$scope.initMap();
-	// console.log($scope.map);
+
+.controller("FlickrCtrl", ['$timeout', '$q', '$http', function($timeout, $q, $http){
+	var vm = this;
+	vm.initMap = initMap;
+	vm.searchFlickr = searchFlickr;
+	vm.initMap();
+	// console.log(vm.map);
 
 	function initMap() {
-        $scope.map = new google.maps.Map(document.getElementById('map'), {
+        vm.map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 40, lng: -73},
           zoom: 8
         });
@@ -16,27 +19,29 @@ angular.module("FlickrApp", ['ngAnimate'])
 		    west: -74
 		  };
 
-		$scope.rectangle = new google.maps.Rectangle({
+		vm.rectangle = new google.maps.Rectangle({
 			bounds: bounds,
 			editable: true,
 			draggable: true
 		});
 
-		$scope.rectangle.setMap($scope.map);
-        console.log($scope.map);
-        console.log($scope.rectangle);
+		vm.rectangle.setMap(vm.map);
+        console.log(vm.map);
+        console.log(vm.rectangle);
+        vm.rectangle.addListener("bounds_changed", function(){
+        	console.log(vm.rectangle.getBounds());
+        });
 
 
       }
 
-	$scope.searchFlickr = function(tag){
-		$scope.results = undefined;
-		
-		$scope.tagToSearch = $scope.tag;
-		$scope.tagToSearch = tag;
-		$scope.notifyResults = false;
-		$scope.error = false;
-		$scope.notifySearch = true;
+	function searchFlickr(tag) {
+		vm.results = undefined;
+		vm.tagToSearch = vm.tag;
+		vm.tagToSearch = tag;
+		vm.notifyResults = false;
+		vm.error = false;
+		vm.notifySearch = true;
 
 		initMap();
 
@@ -55,20 +60,21 @@ angular.module("FlickrApp", ['ngAnimate'])
 			params: params
 		})
 		.then(function(response){
-			$scope.notifySearch = false;
-			$scope.notifyResults = true;
-			$scope.results = response.data.photos.photo;
+			vm.notifySearch = false;
+			vm.notifyResults = true;
+			vm.results = response.data.photos.photo;
 			
 		},
 		function(response){
 			alert('Sorry, an error occurred.');
-			$scope.error = true;
+			vm.error = true;
 		})
 		.then(function(){
-			$scope.tag = "";
+			vm.tag = "";
 		});
 	};
 }])
+
 .run(function(){
 	// var map;
 	// function initMap() {

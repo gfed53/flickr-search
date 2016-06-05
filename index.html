@@ -12,7 +12,7 @@
 	<title>Flickr Search API</title>
 
 </head>
-<body ng-controller="FlickrCtrl">
+<body ng-controller="FlickrCtrl as flickr">
 	<header class="masthead">
 		<h1>Flickr Searcher</h1>
 		<p>By Gregory Federico. 2016</p>
@@ -21,9 +21,9 @@
 	</section>
 	<section class="row search-section">
 		<div class="col-md-12">
-			<form id="search-term" name="myForm" ng-submit="searchFlickr(tag)">
+			<form id="search-term" name="myForm" ng-submit="flickr.searchFlickr(flickr.tag)">
 				<div class="input-group">
-					<input class="form-control search-form" ng-model="tag" type="text" placeholder="Search by tag" required>
+					<input class="form-control search-form" ng-model="flickr.tag" type="text" placeholder="Search by tag" required>
 					<span class="input-group-btn">
 					<input class="btn btn-default" type="submit" value="Submit">			
 					</span>			
@@ -32,10 +32,10 @@
 		</div>
 	</section>
 	<section class="results-section">
-		<div ng-if="notifySearch" class="notify notify-searching">Searching Flickr for photos tagged with {{ tagToSearch }}.</div>
-		<div ng-if="error" class="notify notify-error">Sorry, an error occured.</div>
-		<div ng-if="notifyResults" class="notify notify-results">We found {{ results.length }} results for {{ tagToSearch }}.</div>
-		<div ng-show="myForm.$submitted" ng-repeat="result in results" class="results">
+		<div ng-if="flickr.notifySearch" class="notify notify-searching">Searching Flickr for photos tagged with {{ flickr.tagToSearch }}.</div>
+		<div ng-if="flickr.error" class="notify notify-error">Sorry, an error occured.</div>
+		<div ng-if="flickr.notifyResults" class="notify notify-results">We found {{ flickr.results.length }} results for {{ flickr.tagToSearch }}.</div>
+		<div ng-show="myForm.$submitted" ng-repeat="result in flickr.results" class="results">
 			<img ng-src="https://farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture">
 		</div>
 	</section>
