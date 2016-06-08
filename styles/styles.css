@@ -8,11 +8,11 @@ header, .search-section, .results-section {
 }
 
 header {
-	margin-top: 10em;
+	margin-top: 5em;
 }
 
 header h1 {
-	font-size: 5em;
+	font-size: 3em;
 	font-family: "Montserrat", sans-serif;
 	font-weight: bold;
 	margin: 0;
@@ -20,8 +20,17 @@ header h1 {
 
 #map {
 	height: 30em;
-	width: 75%;
+	width: 100%;
 	margin: 0 auto;
+}
+
+#directions {
+	margin: 1em;
+}
+
+#directions p {
+	text-align: center;
+	font-weight: bold;
 }
 
 #search-term {
@@ -50,6 +59,7 @@ header h1 {
 	display: inline-block;
 	margin: 1em;
 	transition: 1s linear all;
+	vertical-align: middle;
 }
 
 .results img {
@@ -86,6 +96,22 @@ header h1 {
 }
 
 /*Media Queries*/
+
+@media screen and (min-width: 470px){
+	header {
+	margin-top: 10em;
+	}
+	header h1 {
+		font-size: 5em;
+	}
+}
+
+@media screen and (min-width: 768px){
+	#map {
+		width: 75%;
+	}	
+}
+
 
 
 
