@@ -1,5 +1,6 @@
-The Flickr Searcher app retrieves search results from Flickr's API using GET requests via AngularJS's $http service.
+# Flickr 'round the World
 
-Developing this app helped me to learn more about API hacking using the AngularJS framework, and also facilitated the use of notifications throughout the search process which, utilizing scope, can be rendered and displayed within the view.
+Flickr 'round the World retrieves search results from Flickr's API using GET requests via AngularJS's $http service. Previously known as just plain old Flickr Searcher, this app was reformatted and redesigned to incorporate the Google Maps API. It allows the user to select a portion of the world and search for nature-based photos specifically taken from that area.
 
-I feel like there is more that I can add to this app, and probably will do so in the future. I'm still fairly new to Flickr, so there may be something I come across in the near future that will spark an idea. Most likely I will add a more advanced search engine if the API allows it. 
+Developing this app helped me learn more about API hacking using the AngularJS framework, as well as exploring the use of notifications throughout the search process which, utilizing scope, can be rendered and displayed within the view.
+
