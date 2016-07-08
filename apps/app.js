@@ -29,10 +29,10 @@ angular.module('FlickrApp', ['ngAnimate'])
 		vm.rectangle.setMap(vm.map);
         vm.rectangle.addListener("bounds_changed", function(){
         	var bounds = vm.rectangle.getBounds();
-        	vm.south = bounds.H.H;
-        	vm.north = bounds.H.j;
-        	vm.east = bounds.j.H;
-        	vm.west = bounds.j.j;
+        	vm.south = bounds.f.f;
+        	vm.north = bounds.f.b;
+        	vm.east = bounds.b.f;
+        	vm.west = bounds.b.b;
         });
       }
 
