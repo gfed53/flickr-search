@@ -1,9 +1,9 @@
 angular.module('FlickrApp', ['ngAnimate'])
 
-.controller('FlickrCtrl', ['$timeout', '$q', '$http', 'flInitMap', FlickrCtrl]);
+.controller('FlickrCtrl', ['$timeout', '$q', '$http', 'flInitMap', 'flSearchFlickr', FlickrCtrl]);
 
 
-function FlickrCtrl ($timeout, $q, $http, flInitMap){
+function FlickrCtrl ($timeout, $q, $http, flInitMap, flSearchFlickr){
 	var vm = this;
 	vm.initMap = initMap;
 	vm.searchFlickr = searchFlickr;
@@ -14,17 +14,20 @@ function FlickrCtrl ($timeout, $q, $http, flInitMap){
 		var mapObj = flInitMap(update);
 		vm.map = mapObj.map;
 		vm.rectangle = mapObj.rectangle;
+		update();
 
 		function update(){
 			var bounds = vm.rectangle.getBounds();
-			vm.south = bounds.f.f;
-			vm.north = bounds.f.b;
-			vm.east = bounds.b.f;
-			vm.west = bounds.b.b;
+			vm.points = {
+				south: bounds.f.f,
+				north: bounds.f.b,
+				east: bounds.b.f,
+				west: bounds.b.b
+			};
 		};
 	}
 
-	function searchFlickr(tag) {
+	function searchFlickr(tag, points) {
 		vm.results = undefined;
 		vm.tagToSearch = vm.tag;
 		vm.tagToSearch = tag;
@@ -32,30 +35,13 @@ function FlickrCtrl ($timeout, $q, $http, flInitMap){
 		vm.error = false;
 		vm.notifySearch = true;
 
-		var url = "https://api.flickr.com/services/rest",
-		params = {
-			method: "flickr.photos.search",
-			api_key: "a35c104c1a7f9762e0f6cdf064f39657",
-			tags: "outdoor, -people, -portrait, "+ tag,
-			tag_mode: "all",
-			bbox: vm.west+", "+vm.south+", "+vm.east+", "+vm.north,
-			safe_search: 1,
-			format: "json",
-			nojsoncallback: 1
-		};
-
-		$http({
-			method: "GET",
-			url: url,
-			params: params
-		})
+		flSearchFlickr(tag, points).getResults()
 		.then(function(response){
 			vm.notifySearch = false;
 			vm.notifyResults = true;
 			vm.results = response.data.photos.photo;	
 		},
 		function(response){
-			alert("Sorry, an error occurred.");
 			vm.error = true;
 		})
 		.then(function(){
