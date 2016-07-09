@@ -1,7 +1,7 @@
 angular.module('FlickrApp')
 
 .factory('flInitMap', [flInitMap])
-.factory('flSearchFlickr', ['$http', '$q', flSearchFlickr])
+.factory('flSearchFlickr', ['$http', '$q', flSearchFlickr]);
 
 function flInitMap(){
 	return function(callback){
@@ -31,10 +31,10 @@ function flInitMap(){
 		var mapObj = {
 			map: map,
 			rectangle: rectangle
-		}
+		};
 
 		return mapObj;
-	}
+	};
 }
 
 function flSearchFlickr($http, $q){
@@ -68,9 +68,9 @@ function flSearchFlickr($http, $q){
 			},
 			function(response){
 				alert("Sorry, an error occurred.");
-			})
+			});
 		}	
-	}
+	};
 }
 
 

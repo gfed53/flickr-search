@@ -24,7 +24,7 @@ function FlickrCtrl ($timeout, $q, $http, flInitMap, flSearchFlickr){
 				east: bounds.b.f,
 				west: bounds.b.b
 			};
-		};
+		}
 	}
 
 	function searchFlickr(tag, points) {
@@ -47,7 +47,7 @@ function FlickrCtrl ($timeout, $q, $http, flInitMap, flSearchFlickr){
 		.then(function(){
 			vm.tag = "";
 		});
-	};
-};
+	}
+}
 
 
