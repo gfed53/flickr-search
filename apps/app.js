@@ -1,6 +1,9 @@
 angular.module('FlickrApp', ['ngAnimate'])
 
-.controller('FlickrCtrl', ['$timeout', '$q', '$http', function($timeout, $q, $http){
+.controller('FlickrCtrl', ['$timeout', '$q', '$http', 'flInitMap', FlickrCtrl]);
+
+
+function FlickrCtrl ($timeout, $q, $http, flInitMap){
 	var vm = this;
 	vm.initMap = initMap;
 	vm.searchFlickr = searchFlickr;
@@ -8,33 +11,18 @@ angular.module('FlickrApp', ['ngAnimate'])
 	vm.initMap();
 
 	function initMap() {
-        vm.map = new google.maps.Map(document.getElementById("map"), {
-          center: {lat: 39, lng: -99},
-          zoom: 2
-        });
-        
-        var bounds = {
-		    north: 42,
-		    south: 37,
-		    east: -88,
-		    west: -97
-		  };
+		var mapObj = flInitMap(update);
+		vm.map = mapObj.map;
+		vm.rectangle = mapObj.rectangle;
 
-		vm.rectangle = new google.maps.Rectangle({
-			bounds: bounds,
-			editable: true,
-			draggable: true
-		});
-
-		vm.rectangle.setMap(vm.map);
-        vm.rectangle.addListener("bounds_changed", function(){
-        	var bounds = vm.rectangle.getBounds();
-        	vm.south = bounds.f.f;
-        	vm.north = bounds.f.b;
-        	vm.east = bounds.b.f;
-        	vm.west = bounds.b.b;
-        });
-      }
+		function update(){
+			var bounds = vm.rectangle.getBounds();
+			vm.south = bounds.f.f;
+			vm.north = bounds.f.b;
+			vm.east = bounds.b.f;
+			vm.west = bounds.b.b;
+		};
+	}
 
 	function searchFlickr(tag) {
 		vm.results = undefined;
@@ -74,6 +62,6 @@ angular.module('FlickrApp', ['ngAnimate'])
 			vm.tag = "";
 		});
 	};
-}])
+};
 
 
