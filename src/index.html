@@ -27,6 +27,24 @@
 	<section class="row search-section">
 		<div class="col-md-12">
 			<form id="search-term" name="myForm" ng-submit="flickr.searchFlickr(flickr.tag, flickr.points)">
+				<div class="row" id="lang-section">
+					<div class="col-md-3">
+						<label>Select Language: </label>
+					</div>
+					<div class="col-md-6">
+						<select class="form-control" ng-model="flickr.lang">
+							<option value="es">Spanish</option>
+							<option value="ja">Japanese</option>
+							<option value="ru">Russian</option>
+						</select>
+					</div>
+					<!-- <pre>{{ flickr.lang }}</pre> -->
+					<!-- <pre>{{ flickr.tag }}</pre> -->
+					<!-- <pre>{{ flickr.tagList }}</pre> -->
+					<div class="col-md-3" id="trans-btn-container">
+						<input type="button" class="btn btn-default" value="Translate!" ng-click="flickr.translate(flickr.tag, flickr.lang)">
+					</div>
+				</div>
 				<div class="input-group">
 					<input class="form-control search-form" ng-model="flickr.tag" type="text" placeholder="Search by tag" required>
 					<span class="input-group-btn">

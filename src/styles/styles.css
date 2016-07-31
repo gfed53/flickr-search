@@ -38,6 +38,14 @@ header h1 {
 	margin: 0 auto;
 }
 
+#lang-section {
+	margin-bottom: 1em;
+}
+
+#trans-btn-container {
+	text-align: right;
+}
+
 .results-section {
 	margin-top: 3em;
 }

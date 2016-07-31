@@ -1,12 +1,17 @@
 angular.module('FlickrApp', ['ngAnimate'])
 
-.controller('FlickrCtrl', ['$timeout', '$q', '$http', 'flInitMap', 'flSearchFlickr', FlickrCtrl]);
+.controller('FlickrCtrl', ['$scope', '$timeout', 'flInitMap', 'flSearchFlickr', 'flTranslate', FlickrCtrl]);
 
 
-function FlickrCtrl ($timeout, $q, $http, flInitMap, flSearchFlickr){
+function FlickrCtrl ($scope, $timeout, flInitMap, flSearchFlickr, flTranslate){
 	var vm = this;
+	// vm.tag = flTranslate.getTagList();
 	vm.initMap = initMap;
 	vm.searchFlickr = searchFlickr;
+	vm.translate = translate;
+	// vm.lang = {
+	// 	english: 'en'
+	// };
 
 	vm.initMap();
 
@@ -25,6 +30,17 @@ function FlickrCtrl ($timeout, $q, $http, flInitMap, flSearchFlickr){
 				west: bounds.b.b
 			};
 		}
+	}
+
+	function translate(tag, lang){
+		flTranslate.translate(tag, lang)
+		.then(function(response){
+			console.log(response);
+			console.log(response.data.text[0]);
+			vm.tag = response.data.text[0];
+		}, function(error){
+			
+		});
 	}
 
 	function searchFlickr(tag, points) {
