@@ -1,17 +1,17 @@
 angular.module('FlickrApp', ['ngAnimate'])
 
-.controller('FlickrCtrl', ['$scope', '$timeout', 'flInitMap', 'flSearchFlickr', 'flTranslate', FlickrCtrl]);
+.controller('FlickrCtrl', ['$scope', '$timeout', 'flInitMap', 'flSearchFlickr', 'flTranslate', 'flFilters', FlickrCtrl]);
 
 
-function FlickrCtrl ($scope, $timeout, flInitMap, flSearchFlickr, flTranslate){
+function FlickrCtrl ($scope, $timeout, flInitMap, flSearchFlickr, flTranslate, flFilters){
 	var vm = this;
 	// vm.tag = flTranslate.getTagList();
 	vm.initMap = initMap;
 	vm.searchFlickr = searchFlickr;
 	vm.translate = translate;
-	// vm.lang = {
-	// 	english: 'en'
-	// };
+	vm.langs = flTranslate.langs;
+	vm.lang = vm.langs[0];
+	vm.outdoor = true;
 
 	vm.initMap();
 
@@ -45,14 +45,15 @@ function FlickrCtrl ($scope, $timeout, flInitMap, flSearchFlickr, flTranslate){
 
 	function searchFlickr(tag, points) {
 		vm.results = undefined;
-		vm.tagToSearch = vm.tag;
 		vm.tagToSearch = tag;
+		var tagList = flFilters.checkOutdoor(tag, vm.outdoor);
 		vm.notifyResults = false;
 		vm.error = false;
 		vm.notifySearch = true;
 
-		flSearchFlickr(tag, points).getResults()
+		flSearchFlickr(tagList, points).getResults()
 		.then(function(response){
+			console.log(response);
 			vm.notifySearch = false;
 			vm.notifyResults = true;
 			vm.results = response.data.photos.photo;	

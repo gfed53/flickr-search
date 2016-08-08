@@ -3,6 +3,7 @@ angular.module('FlickrApp')
 .factory('flInitMap', [flInitMap])
 .factory('flSearchFlickr', ['$http', '$q', '$timeout', 'flTranslate', flSearchFlickr])
 .service('flTranslate', ['$http', '$q', flTranslate])
+.service('flFilters', [flFilters])
 
 function flInitMap(){
 	return function(callback){
@@ -46,7 +47,7 @@ function flSearchFlickr($http, $q, $timeout, flTranslate){
 		params = {
 			method: 'flickr.photos.search',
 			api_key: 'a35c104c1a7f9762e0f6cdf064f39657',
-			tags: 'outdoor, -people, -portrait, '+ tagList,
+			tags: '-people, -portrait, '+tagList,
 			tag_mode: 'all',
 			bbox: points.west+', '+points.south+', '+points.east+', '+points.north,
 			safe_search: 1,
@@ -57,6 +58,7 @@ function flSearchFlickr($http, $q, $timeout, flTranslate){
 		var services = {
 			// getTagList: getTagList,
 			getResults: getResults,
+			cTransAndResults: cTransAndResults
 			// transSearch: transSearch
 		};
 		
@@ -76,37 +78,59 @@ function flSearchFlickr($http, $q, $timeout, flTranslate){
 			});
 		}
 
-		// function transSearch(){
-		// 	var promises = [];
-		// 	for(lang in langObj){
-		// 		if(langObj[lang] != 'en' && langObj[lang]){
-		// 			// console.log(langObj[lang]);
-		// 			var promise = flTranslate().translate(tag, langObj[lang]);
-		// 			promises.push(promise);
-		// 			// flTranslate().translate(tag, langObj[lang]).then(function(response){
-		// 			// 	console.log(response.data.text[0]);
-		// 			// 	tagList += ', '+response.data.text[0]+', ';
-		// 			// });
-		// 			// tagList += ', outdoor, '
-		// 		}
-		// 	}
+		function checkTrans(keyword, lang){
+			var deferred = $q.defer();
+			var string = '';
+			if(lang){
+				flTranslate.translate(keyword, lang)
+				.then(function(response){
+					var transKeyword = response.data.text[0];
+					string += transKeyword+', ';
+					flTranslate.translate('outdoor', lang)
+					.then(function(second){
+						var outdoor = second.data.text[0];
+						string += outdoor;
+						deferred.resolve(string);
+					})
+					
+				});
+			} else {
+				deferred.resolve(keyword+', outdoor');
+			}
+			return deferred.promise;
+		}
 
-		// 	$q.all(promises).then(function(response){
-		// 		console.log(response.data.text[0]);
-		// 		tagList += ', '+response.data.text[0]+', ';
-		// 		console.log(tagList);
-		// 		return getResults();
-		// 	});
+		function cTransAndResults(){
+			var deferred = $q.defer();
+			checkTrans(tag, lang).then(function(response){
+				console.log(response);
+				tagList = response;
+				params.tags += response;
+				getResults().then(function(response){
+					deferred.resolve(response);
+				})
+			});
 
-		// 	return getResults();
-
-
-		// }	
+			return deferred.promise;
+		}	
 	};
 }
 
 function flTranslate($http, $q){
 	// var tagList;
+	var langs = [{
+		label: 'English',
+		value: ''
+	}, {
+		label: 'Spanish',
+		value: 'es'
+	}, {
+		label: 'Russian',
+		value: 'ru'
+	}, {
+		label: 'Japanese',
+		value: 'ja'
+	}];
 
 	function translate(text, lang){
 		console.log('running');
@@ -177,16 +201,23 @@ function flTranslate($http, $q){
 		return deferred.promise;
 	}
 
-	function getTagList(){
-		// return tagList;
-	}
-
+	this.langs = langs;
 	this.translate = translate;
 	this.translateAll = translateAll;
-	this.getTagList = getTagList;
+	// this.getTagList = getTagList;
 }
 
+function flFilters(){
+	function checkOutdoor(tag, bool){
+		if(bool){
+			return tag+=', outdoor';
+		} else {
+			return tag;
+		}
+	}
 
+	this.checkOutdoor = checkOutdoor;
+}
 
 
 
