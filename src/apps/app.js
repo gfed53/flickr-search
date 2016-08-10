@@ -5,7 +5,6 @@ angular.module('FlickrApp', ['ngAnimate'])
 
 function FlickrCtrl ($scope, $timeout, flInitMap, flSearchFlickr, flTranslate, flFilters){
 	var vm = this;
-	// vm.tag = flTranslate.getTagList();
 	vm.initMap = initMap;
 	vm.searchFlickr = searchFlickr;
 	vm.translate = translate;
@@ -35,8 +34,6 @@ function FlickrCtrl ($scope, $timeout, flInitMap, flSearchFlickr, flTranslate, f
 	function translate(tag, lang){
 		flTranslate.translate(tag, lang)
 		.then(function(response){
-			console.log(response);
-			console.log(response.data.text[0]);
 			vm.tag = response.data.text[0];
 		}, function(error){
 			
@@ -53,7 +50,6 @@ function FlickrCtrl ($scope, $timeout, flInitMap, flSearchFlickr, flTranslate, f
 
 		flSearchFlickr(tagList, points).getResults()
 		.then(function(response){
-			console.log(response);
 			vm.notifySearch = false;
 			vm.notifyResults = true;
 			vm.results = response.data.photos.photo;	

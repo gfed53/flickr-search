@@ -35,9 +35,6 @@
 						<select class="form-control" ng-model="flickr.lang" ng-options="item.label for item in flickr.langs">
 						</select>
 					</div>
-					<!-- <pre>{{ flickr.lang }}</pre> -->
-					<!-- <pre>{{ flickr.tag }}</pre> -->
-					<!-- <pre>{{ flickr.tagList }}</pre> -->
 					<div class="col-md-4" id="trans-btn-container">
 						<input type="button" class="btn btn-default" value="Translate!" ng-click="flickr.translate(flickr.tag, flickr.lang.value)">
 					</div>
@@ -49,7 +46,6 @@
 					<div class="col-md-6">
 						<input type="checkbox" name="" id="" ng-model="flickr.outdoor">
 					</div>
-					<!-- <pre>{{ flickr.outdoor }}</pre> -->
 				</div>
 				<div class="input-group">
 					<input class="form-control search-form" ng-model="flickr.tag" type="text" placeholder="Search by tag" required>
