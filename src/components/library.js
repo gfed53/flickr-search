@@ -56,10 +56,7 @@ function flSearchFlickr($http, $q, $timeout, flTranslate){
 		};
 
 		var services = {
-			// getTagList: getTagList,
-			getResults: getResults,
-			cTransAndResults: cTransAndResults
-			// transSearch: transSearch
+			getResults: getResults
 		};
 		
 		return services;
@@ -76,48 +73,11 @@ function flSearchFlickr($http, $q, $timeout, flTranslate){
 			function(response){
 				alert('Sorry, an error occurred.');
 			});
-		}
-
-		function checkTrans(keyword, lang){
-			var deferred = $q.defer();
-			var string = '';
-			if(lang){
-				flTranslate.translate(keyword, lang)
-				.then(function(response){
-					var transKeyword = response.data.text[0];
-					string += transKeyword+', ';
-					flTranslate.translate('outdoor', lang)
-					.then(function(second){
-						var outdoor = second.data.text[0];
-						string += outdoor;
-						deferred.resolve(string);
-					})
-					
-				});
-			} else {
-				deferred.resolve(keyword+', outdoor');
-			}
-			return deferred.promise;
-		}
-
-		function cTransAndResults(){
-			var deferred = $q.defer();
-			checkTrans(tag, lang).then(function(response){
-				console.log(response);
-				tagList = response;
-				params.tags += response;
-				getResults().then(function(response){
-					deferred.resolve(response);
-				})
-			});
-
-			return deferred.promise;
 		}	
 	};
 }
 
 function flTranslate($http, $q){
-	// var tagList;
 	var langs = [{
 		label: 'English',
 		value: ''
@@ -133,13 +93,11 @@ function flTranslate($http, $q){
 	}];
 
 	function translate(text, lang){
-		console.log('running');
 		var url = 'https://translate.yandex.net/api/v1.5/tr.json/translate',
 		request = {
 			key: 'trnsl.1.1.20160728T161850Z.60e012cb689f9dfd.6f8cd99e32d858950d047eaffecf930701d73a38',
 			text: text,
 			lang: 'en-'+lang
-				// callback: 'JSON_CALLBACK'
 			};
 
 			return $http({
@@ -148,63 +106,14 @@ function flTranslate($http, $q){
 				params: request
 			})
 			.then(function(response){
-				// console.log(response);
-				// console.log(response.data.text[0]);
 				return $q.when(response);
 			}, function(){
-				console.log('translate error');
 				alert('Error retrieving translation. Did you select a language?')
 			})
 		}
 
-	function translateAll(tag, list){
-		var deferred = $q.defer();
-		var tagList = tag;
-		var langArray = [];
-		console.log(tagList);
-		console.log(list);
-		// var deferred = $q.defer();
-		for(lang in list){
-			if(list[lang] != 'en' && list[lang]){
-				langArray.push(list[lang]);
-				// console.log(list[lang]);
-				// translate(tag, list[lang]).then(function(response){
-				// 	console.log(response.data.text[0]);
-				// 	tagList += ', '+response.data.text[0]+', ';
-				// 	console.log(tagList);
-				// });
-			}
-		}
-
-		console.log(langArray);
-		var counter = langArray.length;
-		console.log(counter);
-
-		if(langArray.length === 0){
-			deferred.reject("No translations were necessary.");
-		}
-
-		for(var i = 0; i<langArray.length; i++){
-			translate(tag, langArray[i]).then(function(response){
-				console.log(response.data.text[0]);
-				tagList += ', '+response.data.text[0]+', ';
-				console.log(tagList);
-				counter--;
-				console.log(counter);
-					if(counter <= 0){
-						console.log('should return: '+tagList);
-						deferred.resolve(tagList);
-					}
-				});
-		}
-
-		return deferred.promise;
-	}
-
 	this.langs = langs;
 	this.translate = translate;
-	this.translateAll = translateAll;
-	// this.getTagList = getTagList;
 }
 
 function flFilters(){
