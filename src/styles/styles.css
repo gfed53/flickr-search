@@ -42,8 +42,13 @@ header h1 {
 	margin-bottom: 1em;
 }
 
-#trans-btn-container {
-	text-align: right;
+#trans-btn-container, .filter-checkbox {
+	text-align: center;
+}
+
+.trans-select {
+	max-width: 15em;
+	margin: 0 auto;
 }
 
 .results-section {
@@ -117,7 +122,13 @@ header h1 {
 @media screen and (min-width: 768px){
 	#map {
 		width: 75%;
-	}	
+	}
+}
+
+@media screen and (min-width: 993px){
+	.trans-select {
+		max-width: 100%;
+	}
 }
 
 

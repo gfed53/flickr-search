@@ -32,7 +32,7 @@
 						<label>Select Language: </label>
 					</div>
 					<div class="col-md-4">
-						<select class="form-control" ng-model="flickr.lang" ng-options="item.label for item in flickr.langs">
+						<select class="form-control trans-select" ng-model="flickr.lang" ng-options="item.label for item in flickr.langs">
 						</select>
 					</div>
 					<div class="col-md-4" id="trans-btn-container">
@@ -40,10 +40,11 @@
 					</div>
 				</div>
 				<div class="row" id="filter-section">
-					<div class="col-md-6">
+					<div class="col-xs-8">
 						<label>Strictly Outdoor:</label>
+						<p>Hint: Toggle this off when making searches in non-English languages.</p>
 					</div>
-					<div class="col-md-6">
+					<div class="col-xs-4 filter-checkbox">
 						<input type="checkbox" name="" id="" ng-model="flickr.outdoor">
 					</div>
 				</div>
