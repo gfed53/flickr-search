@@ -57,7 +57,7 @@
 			</form>		
 		</div>
 	</section>
-	<section class="results-section">
+	<section class="results-section" id="results-section">
 		<div ng-if="flickr.notifySearch" class="notify notify-searching">Searching Flickr for photos tagged with {{ flickr.tagToSearch }}.</div>
 		<div ng-if="flickr.error" class="notify notify-error">Sorry, an error occured.</div>
 		<div ng-if="flickr.notifyResults" class="notify notify-results">We found {{ flickr.results.length }} results for {{ flickr.tagToSearch }}.</div>

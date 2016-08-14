@@ -2,6 +2,7 @@ angular.module('FlickrApp')
 
 .factory('flInitMap', [flInitMap])
 .factory('flSearchFlickr', ['$http', '$q', '$timeout', 'flTranslate', flSearchFlickr])
+.factory('flScrollTo', ['$location', '$anchorScroll', flScrollTo])
 .service('flTranslate', ['$http', '$q', flTranslate])
 .service('flFilters', [flFilters])
 
@@ -128,5 +129,34 @@ function flFilters(){
 	this.checkOutdoor = checkOutdoor;
 }
 
+function flScrollTo($location, $anchorScroll){
+	return function(){
+		var services = {
+			scrollToElement: scrollToElement,
+			checkScrollBtnStatus: checkScrollBtnStatus
+		}
+
+		return services;
+
+		function scrollToElement(scrollId){
+			$anchorScroll.yOffset = 45;
+			var element = document.getElementById(scrollId);
+			if(element){
+				$location.hash(scrollId);
+				$anchorScroll();
+			} else {
+				window.scroll(0, 0);
+			}
+		}
+
+		function checkScrollBtnStatus(){
+			if(window.scrollY > 100){
+				return true;
+			} else {
+				return false;
+			}
+		}	
+	}
+}
 
 

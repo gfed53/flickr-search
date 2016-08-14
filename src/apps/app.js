@@ -1,9 +1,9 @@
 angular.module('FlickrApp', ['ngAnimate'])
 
-.controller('FlickrCtrl', ['$scope', '$timeout', 'flInitMap', 'flSearchFlickr', 'flTranslate', 'flFilters', FlickrCtrl]);
+.controller('FlickrCtrl', ['$scope', '$timeout', '$location', 'flInitMap', 'flSearchFlickr', 'flTranslate', 'flFilters', 'flScrollTo', FlickrCtrl]);
 
 
-function FlickrCtrl ($scope, $timeout, flInitMap, flSearchFlickr, flTranslate, flFilters){
+function FlickrCtrl ($scope, $timeout, $location, flInitMap, flSearchFlickr, flTranslate, flFilters, flScrollTo){
 	var vm = this;
 	vm.initMap = initMap;
 	vm.searchFlickr = searchFlickr;
@@ -11,7 +11,9 @@ function FlickrCtrl ($scope, $timeout, flInitMap, flSearchFlickr, flTranslate, f
 	vm.langs = flTranslate.langs;
 	vm.lang = vm.langs[0];
 	vm.outdoor = true;
+	vm.scrollTo = scrollTo;
 
+	$location.url('/');
 	vm.initMap();
 
 	function initMap() {
@@ -58,8 +60,16 @@ function FlickrCtrl ($scope, $timeout, flInitMap, flSearchFlickr, flTranslate, f
 			vm.error = true;
 		})
 		.then(function(){
-			vm.tag = "";
+			vm.tag = '';
+			$timeout(function(){
+				// vm.scrollTo('scroll-point');
+				vm.scrollTo('results-section');
+			}, 1000);	
 		});
+	}
+
+	function scrollTo(scrollId){
+		flScrollTo().scrollToElement(scrollId);
 	}
 }
 
