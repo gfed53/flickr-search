@@ -83,14 +83,29 @@ function flTranslate($http, $q){
 		label: 'English',
 		value: ''
 	}, {
-		label: 'Spanish',
-		value: 'es'
+		label: 'Arabic',
+		value: 'ar'
+	}, {
+		label: 'Chinese',
+		value: 'zh'
+	}, {
+		label: 'French',
+		value: 'fr'
+	}, {
+		label: 'Hindi',
+		value: 'hi'
+	}, {
+		label: 'Italian',
+		value: 'it'
+	}, {
+		label: 'Japanese',
+		value: 'ja'
 	}, {
 		label: 'Russian',
 		value: 'ru'
 	}, {
-		label: 'Japanese',
-		value: 'ja'
+		label: 'Spanish',
+		value: 'es'
 	}];
 
 	function translate(text, lang){

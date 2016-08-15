@@ -62,7 +62,6 @@ function FlickrCtrl ($scope, $timeout, $location, flInitMap, flSearchFlickr, flT
 		.then(function(){
 			vm.tag = '';
 			$timeout(function(){
-				// vm.scrollTo('scroll-point');
 				vm.scrollTo('results-section');
 			}, 1000);	
 		});
