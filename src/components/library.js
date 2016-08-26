@@ -83,14 +83,23 @@ function flTranslate($http, $q){
 		label: 'English',
 		value: ''
 	}, {
+		label: 'Albanian',
+		value: 'sq'
+	}, {
 		label: 'Arabic',
 		value: 'ar'
+	}, {
+		label: 'Bulgarian',
+		value: 'bg'
 	}, {
 		label: 'Chinese',
 		value: 'zh'
 	}, {
 		label: 'French',
 		value: 'fr'
+	}, {
+		label: 'German',
+		value: 'de'
 	}, {
 		label: 'Hindi',
 		value: 'hi'
@@ -101,8 +110,14 @@ function flTranslate($http, $q){
 		label: 'Japanese',
 		value: 'ja'
 	}, {
+		label: 'Korean',
+		value: 'ko'
+	}, {
 		label: 'Russian',
 		value: 'ru'
+	}, {
+		label: 'Slovakian',
+		value: 'sf'
 	}, {
 		label: 'Spanish',
 		value: 'es'
