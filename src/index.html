@@ -28,30 +28,28 @@
 		<div class="col-md-12">
 			<form id="search-term" name="myForm" ng-submit="flickr.searchFlickr(flickr.tag, flickr.points)">
 				<div class="row" id="lang-section">
-					<div class="col-md-4">
+					<div class="col-sm-8">
 						<label>Select Language: </label>
 					</div>
-					<div class="col-md-4">
+					<div class="col-sm-4">
 						<select class="form-control trans-select" ng-model="flickr.lang" ng-options="item.label for item in flickr.langs">
 						</select>
 					</div>
-					<div class="col-md-4" id="trans-btn-container">
-						<input type="button" class="btn btn-default" value="Translate!" ng-click="flickr.translate(flickr.tag, flickr.lang.value)">
-					</div>
 				</div>
 				<div class="row" id="filter-section">
-					<div class="col-xs-8">
+					<div class="col-sm-8">
 						<label>Strictly Outdoor:</label>
 						<p>Hint: Toggle this off when making searches in non-English languages.</p>
 					</div>
-					<div class="col-xs-4 filter-checkbox">
+					<div class="col-sm-4 filter-checkbox">
 						<input type="checkbox" name="" id="" ng-model="flickr.outdoor">
 					</div>
 				</div>
 				<div class="input-group">
 					<input class="form-control search-form" ng-model="flickr.tag" type="text" placeholder="Search by tag" required>
 					<span class="input-group-btn">
-					<input class="btn btn-default" type="submit" value="Submit">			
+					<input type="button" class="btn btn-default" value="Translate!" ng-click="flickr.translate(flickr.tag, flickr.lang.value)">
+					<input class="btn btn-default" type="submit" value="Go!">			
 					</span>			
 				</div>	
 			</form>		
@@ -70,7 +68,7 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script data-require="angular.js@1.3.10" data-semver="1.3.10" src="//code.angularjs.org/1.3.10/angular.js"></script>
 	<script type="text/javascript" src="//code.angularjs.org/1.3.10/angular-animate.min.js"></script>
-	<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBMqmShHuzFUZLwyuZk8WVW5GtriTlLxjg" defer></script>
+	<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBMqmShHuzFUZLwyuZk8WVW5GtriTlLxjg" defer></script>	
 	<!-- build:js ./_assets/combined.js -->
 	<script src="apps/app.js"></script>
 	<script src="components/library.js"></script>
