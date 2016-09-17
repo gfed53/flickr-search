@@ -7,6 +7,7 @@
 	.service('flTranslate', ['$http', '$q', flTranslate])
 	.service('flFilters', [flFilters])
 
+	//Initializes our map
 	function flInitMap(){
 		return function(callback){
 			var map = new google.maps.Map(document.getElementById('map'), {
@@ -41,6 +42,7 @@
 		};
 	}
 
+	//Searches the Flickr API for photos based on tag
 	function flSearchFlickr($http, $q, $timeout, flTranslate){
 		return function(tag, points){
 			var tagList = tag;
@@ -50,7 +52,7 @@
 				method: 'flickr.photos.search',
 				api_key: 'a35c104c1a7f9762e0f6cdf064f39657',
 				tags: '-people, -portrait, '+tagList,
-				tag_mode: 'all',
+				tag_mode: 'all', //Results will have ALL tags user selects in search (not ANY tags) This is to keep it nature-based.
 				bbox: points.west+', '+points.south+', '+points.east+', '+points.north,
 				safe_search: 1,
 				format: 'json',
@@ -79,6 +81,7 @@
 		};
 	}
 
+	//Translate service which allows user to translate the query before searching. This can used when searching in a non-English speaking area of the world. There may be pictures tagged in different languages that the user wouldn't otherwise be able to retrieve.
 	function flTranslate($http, $q){
 		var langs = [{
 			label: 'English',
@@ -148,6 +151,7 @@
 		this.translate = translate;
 	}
 
+	//Allows user to choose whether they want their search to automatically include the 'outdoor' tag. This option is given even though it's a nature/outdoor-based search engine because, when the user makes a non-English search, having 'outdoor' still attached to the query defeats the whole purpose of a translated search.  
 	function flFilters(){
 		function checkOutdoor(tag, bool){
 			if(bool){
@@ -160,6 +164,7 @@
 		this.checkOutdoor = checkOutdoor;
 	}
 
+	//Upon search, page automatically scrolls to results
 	function flScrollTo($location, $anchorScroll){
 		return function(){
 			var services = {
