@@ -2,8 +2,9 @@
 	angular.module('FlickrApp')
 
 	.factory('flInitMap', [flInitMap])
-	.factory('flSearchFlickr', ['$http', '$q', '$timeout', 'flTranslate', flSearchFlickr])
+	.factory('flSearchFlickr', ['$http', '$q', '$timeout', 'flTranslate', 'flModalGenerator', flSearchFlickr])
 	.factory('flScrollTo', ['$location', '$anchorScroll', flScrollTo])
+	.factory('flModalGenerator', ['$q', '$uibModal', flModalGenerator])
 	.service('flTranslate', ['$http', '$q', flTranslate])
 	.service('flFilters', [flFilters])
 
@@ -43,10 +44,17 @@
 	}
 
 	//Searches the Flickr API for photos based on tag
-	function flSearchFlickr($http, $q, $timeout, flTranslate){
+	function flSearchFlickr($http, $q, $timeout, flTranslate, flModalGenerator){
 		return function(tag, points){
-			var tagList = tag;
-			
+
+			var tagList;
+			console.log(tag);
+			if(typeof tag === undefined){
+				tagList = '';
+			} else {
+				tagList = tag;
+			}
+
 			var url = 'https://api.flickr.com/services/rest',
 			params = {
 				method: 'flickr.photos.search',
@@ -57,15 +65,18 @@
 				safe_search: 1,
 				format: 'json',
 				nojsoncallback: 1
-			};
+			},
+			emptyModalObj = flModalGenerator().getEmptyFieldTemplate();
 
 			var services = {
-				getResults: getResults
+				getResults: getResults,
+				execute: execute
 			};
 			
 			return services;
 
 			function getResults(){
+				
 				return $http({
 					method: 'GET',
 					url: url,
@@ -77,6 +88,28 @@
 				function(response){
 					alert('Sorry, an error occurred.');
 				});
+			}
+
+			function execute(){
+				var deferred = $q.defer();
+				if(!tagList){
+					flModalGenerator().openModal(emptyModalObj)
+					.then(function(){
+						getResults()
+						.then(function(results){
+							deferred.resolve(results);
+						})
+					}, function(){
+						deferred.reject();
+					})
+				} else {
+					getResults()
+					.then(function(results){
+						deferred.resolve(results);
+					})
+				}
+
+				return deferred.promise;
 			}	
 		};
 	}
@@ -192,6 +225,45 @@
 					return false;
 				}
 			}	
+		}
+	}
+
+	function flModalGenerator($q, $uibModal){
+		return function(){
+			var services = {
+				openModal: openModal,
+				getEmptyFieldTemplate: getEmptyFieldTemplate
+			};
+
+			//Use this format
+			var emptyFieldTemplate = {
+				templateUrl: './modals/empty-field-modal.html',
+				controller: 'emptyFieldModalController',
+				controllerAs: 'emptyFieldModal'
+			}
+
+			function openModal(modalObj){
+				var deferred = $q.defer();
+				var modalInstance = $uibModal.open({
+					templateUrl: modalObj.templateUrl,
+					controller: modalObj.controller,
+					controllerAs: modalObj.controllerAs
+				});
+
+				modalInstance.result.then(function(result){
+						deferred.resolve(result);
+					}, function(error){
+						deferred.reject(error);
+					});
+
+					return deferred.promise;
+				}
+
+			function getEmptyFieldTemplate(){
+				return emptyFieldTemplate;
+			}
+
+			return services;
 		}
 	}
 })();

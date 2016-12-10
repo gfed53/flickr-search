@@ -1,6 +1,6 @@
 (function(){
 
-	angular.module('FlickrApp', ['ngAnimate'])
+	angular.module('FlickrApp', ['ngAnimate', 'ui.bootstrap'])
 
 	.controller('FlickrCtrl', ['$scope', '$timeout', '$location', 'flInitMap', 'flSearchFlickr', 'flTranslate', 'flFilters', 'flScrollTo', FlickrCtrl]);
 
@@ -46,14 +46,15 @@
 
 		function searchFlickr(tag, points) {
 			vm.results = undefined;
-			vm.tagToSearch = tag;
-			var tagList = flFilters.checkOutdoor(tag, vm.outdoor);
+			vm.tagToSearch = (tag || '');
+			var tagList = flFilters.checkOutdoor(vm.tagToSearch, vm.outdoor);
 			vm.notifyResults = false;
 			vm.error = false;
 			vm.notifySearch = true;
 
-			flSearchFlickr(tagList, points).getResults()
+			flSearchFlickr(tagList, points).execute()
 			.then(function(response){
+				console.log(response);
 				vm.notifySearch = false;
 				vm.notifyResults = true;
 				vm.results = response.data.photos.photo;	

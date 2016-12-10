@@ -1,0 +1,9 @@
+<form ng-submit="emptyFieldModal.ok()">
+	<div class="modal-body">
+	    <p>Hey, I noticed that your search box is empty and you have no extra filters. Would you still like to proceed?</p>
+	</div>
+	<div class="modal-footer">
+	    <button autofocus class="btn btn-primary" type="submit">Proceed</button>
+	    <button class="btn btn-warning" type="button" ng-click="emptyFieldModal.cancel()">Cancel</button>
+	</div>
+</form>
