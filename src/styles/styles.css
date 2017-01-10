@@ -56,12 +56,13 @@ header h1 {
 }
 
 .notify-results {
-	padding-top: 2em;
+	padding: 2em;
 	border-top: 2px solid crimson;
 }
  
 .notify {
 	transition: 500ms linear all;
+	font-size: 1.2em;
 }
 
 .wrapper {

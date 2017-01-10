@@ -57,9 +57,12 @@
 		</div>
 	</section>
 	<section class="results-section" id="results-section">
-		<div ng-if="flickr.notifySearch" class="notify notify-searching">Searching Flickr for photos tagged with {{ flickr.tagToSearch }}.</div>
+		<div ng-if="flickr.notifySearch && flickr.tag" class="notify notify-searching">Searching Flickr for photos tagged with {{ flickr.tagToSearch }}.</div>
+		<div ng-if="flickr.notifySearch && !flickr.tag" class="notify notify-searching">Searching Flickr.</div>
 		<div ng-if="flickr.error" class="notify notify-error">Sorry, an error occured.</div>
-		<div ng-if="flickr.notifyResults" class="notify notify-results">We found {{ flickr.results.length }} results for {{ flickr.tagToSearch }}.</div>
+		<div ng-if="flickr.notifyResults && flickr.tagToSearch" class="notify notify-results">We found {{ flickr.results.length }} results for {{ flickr.tagToSearch }}.</div>
+		<!-- If an empty-bar search.. -->
+		<div ng-if="flickr.notifyResults && !flickr.tagToSearch" class="notify notify-results">We found {{ flickr.results.length }} results.</div>
 		<div ng-show="myForm.$submitted" ng-repeat="result in flickr.results" class="results">
 			<a target="_blank" href="//www.flickr.com/photos/{{ result.owner }}/{{ result.id }}"><img ng-src="//farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture"></a>
 		</div>

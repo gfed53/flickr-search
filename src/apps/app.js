@@ -54,7 +54,6 @@
 
 			flSearchFlickr(tagList, points).execute()
 			.then(function(response){
-				console.log(response);
 				vm.notifySearch = false;
 				vm.notifyResults = true;
 				vm.results = response.data.photos.photo;	

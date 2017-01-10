@@ -48,7 +48,6 @@
 		return function(tag, points){
 
 			var tagList;
-			console.log(tag);
 			if(typeof tag === undefined){
 				tagList = '';
 			} else {
