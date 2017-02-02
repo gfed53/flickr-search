@@ -2,10 +2,17 @@
 
 	angular.module('FlickrApp', ['ngAnimate', 'ui.bootstrap'])
 
-	.controller('FlickrCtrl', ['$scope', '$timeout', '$location', 'flInitMap', 'flSearchFlickr', 'flTranslate', 'flFilters', 'flScrollTo', FlickrCtrl]);
+	.run(['$timeout', '$rootScope', 'flInitAPIs', function($timeout, $rootScope, flInitAPIs){
+		flInitAPIs.check()
+		.then(() => {
+			//Do Nothing
+		})
+	}])
+
+	.controller('FlickrCtrl', ['$scope', '$timeout', '$location', 'flInitMap', 'flSearchFlickr', 'flTranslate', 'flFilters', 'flScrollTo', 'flInitAPIs', FlickrCtrl]);
 
 
-	function FlickrCtrl ($scope, $timeout, $location, flInitMap, flSearchFlickr, flTranslate, flFilters, flScrollTo){
+	function FlickrCtrl ($scope, $timeout, $location, flInitMap, flSearchFlickr, flTranslate, flFilters, flScrollTo, flInitAPIs){
 		var vm = this;
 		vm.initMap = initMap;
 		vm.searchFlickr = searchFlickr;
@@ -16,7 +23,14 @@
 		vm.scrollTo = scrollTo;
 
 		$location.url('/');
-		vm.initMap();
+
+		vm.userName = flInitAPIs.apisObj.id;
+		vm.updateAPIs = flInitAPIs.update;
+
+		$timeout(()=>{
+			vm.initMap();
+		}, 1000);
+		
 
 		function initMap() {
 			var mapObj = flInitMap(update);

@@ -2,11 +2,12 @@
 	angular.module('FlickrApp')
 
 	.factory('flInitMap', [flInitMap])
-	.factory('flSearchFlickr', ['$http', '$q', '$timeout', 'flTranslate', 'flModalGenerator', flSearchFlickr])
+	.factory('flSearchFlickr', ['$http', '$q', '$timeout', 'flTranslate', 'flModalGenerator', 'flInitAPIs', flSearchFlickr])
 	.factory('flScrollTo', ['$location', '$anchorScroll', flScrollTo])
 	.factory('flModalGenerator', ['$q', '$uibModal', flModalGenerator])
-	.service('flTranslate', ['$http', '$q', flTranslate])
+	.service('flTranslate', ['$http', '$q', 'flInitAPIs', flTranslate])
 	.service('flFilters', [flFilters])
+	.service('flInitAPIs', ['$q', 'flModalGenerator', flInitAPIs]);
 
 	//Initializes our map
 	function flInitMap(){
@@ -44,7 +45,7 @@
 	}
 
 	//Searches the Flickr API for photos based on tag
-	function flSearchFlickr($http, $q, $timeout, flTranslate, flModalGenerator){
+	function flSearchFlickr($http, $q, $timeout, flTranslate, flModalGenerator, flInitAPIs){
 		return function(tag, points){
 
 			var tagList;
@@ -57,7 +58,7 @@
 			var url = 'https://api.flickr.com/services/rest',
 			params = {
 				method: 'flickr.photos.search',
-				api_key: 'a35c104c1a7f9762e0f6cdf064f39657',
+				api_key: '',
 				tags: '-people, -portrait, '+tagList,
 				tag_mode: 'all', //Results will have ALL tags user selects in search (not ANY tags) This is to keep it nature-based.
 				bbox: points.west+', '+points.south+', '+points.east+', '+points.north,
@@ -75,6 +76,7 @@
 			return services;
 
 			function getResults(){
+				params.api_key = flInitAPIs.apisObj.flickrKey;
 				
 				return $http({
 					method: 'GET',
@@ -114,7 +116,7 @@
 	}
 
 	//Translate service which allows user to translate the query before searching. This can used when searching in a non-English speaking area of the world. There may be pictures tagged in different languages that the user wouldn't otherwise be able to retrieve.
-	function flTranslate($http, $q){
+	function flTranslate($http, $q, flInitAPIs){
 		var langs = [{
 			label: 'English',
 			value: ''
@@ -263,6 +265,111 @@
 			}
 
 			return services;
+		}
+	}
+
+	function flInitAPIs($q, flModalGenerator){
+		var initTemp = {
+				templateUrl: './modals/init-modal.html',
+				controller: 'InitModalController',
+				controllerAs: 'initModal'
+		};
+
+		var updateTemp = {
+				templateUrl: './modals/update-modal.html',
+				controller: 'UpdateModalController',
+				controllerAs: 'updateModal'
+		};
+
+		this.apisObj = {
+			id: 'New User'
+		};
+
+		this.check = check;
+		this.update = update;
+		this.updateMapsScript = updateMapsScript;
+
+		function check(){
+			var deferred = $q.defer();
+			//Checking localStorage to see if user has an id with saved API keys
+			if(localStorage['flckr-log-info']){
+				var obj = JSON.parse(localStorage['flckr-log-info']);
+				this.apisObj = obj;
+				//Updating the DOM (for the Google Maps API)
+				updateDOM(this.apisObj.mapsKey);
+				deferred.resolve(this.apisObj);
+			} else {
+				flModalGenerator().openModal(initTemp)
+				.then((result)=>{
+					if(result === 'cancel'){
+						//Do nothing
+					} else {
+						localStorage.setItem('flckr-log-info', JSON.stringify(result));
+						this.apisObj = localStorage['flckr-log-info'];
+						updateDOM(this.apisObj.mapsKey);
+
+						//Refresh page to enable g maps to work
+						//If I add a separate success modal, we will move this to that callback.
+						location.reload();
+					}
+				});
+			}
+			return deferred.promise;
+		}
+
+		function update(){
+			flModalGenerator().openModal(updateTemp)
+			.then((result)=>{
+				if(result === 'cancel'){
+					//Do nothing
+				} else {
+					localStorage.setItem('flckr-log-info', JSON.stringify(result));
+					this.apisObj = localStorage['flckr-log-info'];
+					updateDOM(this.apisObj.mapsKey);
+
+					//Refresh page to enable g maps to work
+					location.reload();
+				}
+			});
+		}
+
+		function updateDOM(key){
+			if(key){
+				updateMaps(key);
+			} else {
+				updateMaps('');
+			}
+		}
+
+		//Construct url with saved Google Maps API key, then run loadScript()
+		function updateMaps(key){
+			var src = 'https://maps.googleapis.com/maps/api/js?key='+key;
+			loadScript(src)
+			.then(() => {
+				//Success
+			}, ()=> {
+				//Error
+			});
+
+		}
+
+		//Appends a script tag
+		function loadScript(src) {
+		    return new Promise((resolve, reject) => {
+		        var s;
+		        s = document.createElement('script');
+		        
+		        s.src = src;
+		        s.async = "async";
+		        s.onload = resolve;
+		        s.onerror = reject;
+		        document.body.appendChild(s);
+		    });
+		}
+
+		function updateMapsScript(key) {
+			var t = document.getElementsByTagName('script')[0];
+			t.src = 'https://maps.googleapis.com/maps/api/js?key='+key;
 		}
 	}
 })();

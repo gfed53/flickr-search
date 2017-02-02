@@ -26,11 +26,16 @@ header h1 {
 
 #directions {
 	margin: 1em;
+	text-align: center;
 }
 
 #directions p {
-	text-align: center;
 	font-weight: bold;
+}
+
+#greeting {
+	display: inline-block;
+	margin: 1em;
 }
 
 #search-term {
@@ -38,7 +43,7 @@ header h1 {
 	margin: 0 auto;
 }
 
-#lang-section {
+#lang-section, #filter-section {
 	margin-bottom: 1em;
 }
 
