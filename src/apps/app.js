@@ -29,11 +29,10 @@
 
 		$timeout(()=>{
 			vm.initMap();
-		}, 1000);
+		}, 1200);
 		
-
 		function initMap() {
-			var mapObj = flInitMap(update);
+			var mapObj = flInitMap().init(update);
 			vm.map = mapObj.map;
 			vm.rectangle = mapObj.rectangle;
 			update();

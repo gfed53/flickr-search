@@ -11,36 +11,44 @@
 
 	//Initializes our map
 	function flInitMap(){
-		return function(callback){
-			var map = new google.maps.Map(document.getElementById('map'), {
-				center: {lat: 39, lng: -99},
-				zoom: 2
-			});
-
-			var bounds = {
-				north: 42,
-				south: 37,
-				east: -88,
-				west: -97
+		return function(){
+			var services = {
+				init: init
 			};
 
-			var rectangle = new google.maps.Rectangle({
-				bounds: bounds,
-				editable: true,
-				draggable: true
-			});
+			function init(callback){
+				var map = new google.maps.Map(document.getElementById('map'), {
+					center: {lat: 39, lng: -99},
+					zoom: 2
+				});
 
-			rectangle.setMap(map);
-			rectangle.addListener('bounds_changed', function(){
-				callback();
-			});
+				var bounds = {
+					north: 42,
+					south: 37,
+					east: -88,
+					west: -97
+				};
 
-			var mapObj = {
-				map: map,
-				rectangle: rectangle
-			};
+				var rectangle = new google.maps.Rectangle({
+					bounds: bounds,
+					editable: true,
+					draggable: true
+				});
 
-			return mapObj;
+				rectangle.setMap(map);
+				rectangle.addListener('bounds_changed', function(){
+					callback();
+				});
+
+				var mapObj = {
+					map: map,
+					rectangle: rectangle
+				};
+
+				return mapObj;
+			}
+
+			return services;
 		};
 	}
 
@@ -164,22 +172,22 @@
 		function translate(text, lang){
 			var url = 'https://translate.yandex.net/api/v1.5/tr.json/translate',
 			request = {
-				key: 'trnsl.1.1.20160728T161850Z.60e012cb689f9dfd.6f8cd99e32d858950d047eaffecf930701d73a38',
+				key: flInitAPIs.apisObj.translateKey,
 				text: text,
 				lang: 'en-'+lang
-				};
+			};
 
-				return $http({
-					method: 'GET',
-					url: url,
-					params: request
-				})
-				.then(function(response){
-					return $q.when(response);
-				}, function(){
-					alert('Error retrieving translation. Did you select a language?')
-				})
-			}
+			return $http({
+				method: 'GET',
+				url: url,
+				params: request
+			})
+			.then(function(response){
+				return $q.when(response);
+			}, function(){
+				alert('Error retrieving translation. Did you select a language?')
+			})
+		}
 
 		this.langs = langs;
 		this.translate = translate;
@@ -252,13 +260,13 @@
 				});
 
 				modalInstance.result.then(function(result){
-						deferred.resolve(result);
-					}, function(error){
-						deferred.reject(error);
-					});
+					deferred.resolve(result);
+				}, function(error){
+					deferred.reject(error);
+				});
 
-					return deferred.promise;
-				}
+				return deferred.promise;
+			}
 
 			function getEmptyFieldTemplate(){
 				return emptyFieldTemplate;
@@ -270,15 +278,15 @@
 
 	function flInitAPIs($q, flModalGenerator){
 		var initTemp = {
-				templateUrl: './modals/init-modal.html',
-				controller: 'InitModalController',
-				controllerAs: 'initModal'
+			templateUrl: './modals/init-modal.html',
+			controller: 'InitModalController',
+			controllerAs: 'initModal'
 		};
 
 		var updateTemp = {
-				templateUrl: './modals/update-modal.html',
-				controller: 'UpdateModalController',
-				controllerAs: 'updateModal'
+			templateUrl: './modals/update-modal.html',
+			controller: 'UpdateModalController',
+			controllerAs: 'updateModal'
 		};
 
 		this.apisObj = {
@@ -355,16 +363,16 @@
 
 		//Appends a script tag
 		function loadScript(src) {
-		    return new Promise((resolve, reject) => {
-		        var s;
-		        s = document.createElement('script');
-		        
-		        s.src = src;
-		        s.async = "async";
-		        s.onload = resolve;
-		        s.onerror = reject;
-		        document.body.appendChild(s);
-		    });
+			return new Promise((resolve, reject) => {
+				var s;
+				s = document.createElement('script');
+
+				s.src = src;
+				s.async = "async";
+				s.onload = resolve;
+				s.onerror = reject;
+				document.body.appendChild(s);
+			});
 		}
 
 		function updateMapsScript(key) {
