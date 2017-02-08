@@ -3,10 +3,10 @@
 	angular.module('FlickrApp', ['ngAnimate', 'ui.bootstrap'])
 
 	.run(['$timeout', '$rootScope', 'flInitAPIs', function($timeout, $rootScope, flInitAPIs){
-		flInitAPIs.check()
-		.then(() => {
-			//Do Nothing
-		})
+		// flInitAPIs.check()
+		// .then(() => {
+		// 	//Do Nothing
+		// })
 	}])
 
 	.controller('FlickrCtrl', ['$scope', '$timeout', '$location', 'flInitMap', 'flSearchFlickr', 'flTranslate', 'flFilters', 'flScrollTo', 'flInitAPIs', FlickrCtrl]);
@@ -21,15 +21,24 @@
 		vm.lang = vm.langs[0];
 		vm.outdoor = true;
 		vm.scrollTo = scrollTo;
+		vm.submitLogInfo = submitLogInfo;
+		vm.resetLogInfo = resetLogInfo;
 
 		$location.url('/');
 
-		vm.userName = flInitAPIs.apisObj.id;
+		
 		vm.updateAPIs = flInitAPIs.update;
 
-		$timeout(()=>{
-			vm.initMap();
-		}, 1200);
+		vm.needsAuth = flInitAPIs.check(() => {
+			vm.apisObj = flInitAPIs.apisObj;
+			$timeout(()=>{
+				vm.initMap();
+			}, 1200);
+		});
+
+		// $timeout(()=>{
+		// 	vm.initMap();
+		// }, 1200);
 		
 		function initMap() {
 			var mapObj = flInitMap().init(update);
@@ -84,6 +93,15 @@
 
 		function scrollTo(scrollId){
 			flScrollTo().scrollToElement(scrollId);
+		}
+
+		function submitLogInfo(obj){
+			flInitAPIs.update(obj);
+			// vm.needsAuth = false;
+		}
+
+		function resetLogInfo(){
+			vm.needsAuth = true;
 		}
 	}
 })();

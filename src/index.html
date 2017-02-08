@@ -22,51 +22,115 @@
 	</header>
 	<section id="map">
 	</section>
-	<section id="directions">
-		<p id="greeting">Hello {{flickr.userName}}!</p>
-		<button class="btn btn-default" ng-click="flickr.updateAPIs()">Update Info</button>
-		<p>Search by box selection to find pictures of the great outdoors in different areas around the globe!</p>
-	</section>
-	<section class="row search-section">
-		<div class="col-md-12">
-			<form id="search-term" name="myForm" ng-submit="flickr.searchFlickr(flickr.tag, flickr.points)">
-				<div class="row" id="lang-section">
-					<div class="col-sm-8">
-						<label>Select Language: </label>
+	<!-- User Authentication Section -->
+	<section ng-if="flickr.needsAuth" id="user-auth">
+		<p>Hello new user..</p>
+		<p>Before using this app, create an ID and submit the necessary API keys to get the search engine running.</p>
+		<div>
+			<a target="_blank" href="https://en.wikipedia.org/wiki/Application_programming_interface_key">What is an API key?</a>
+		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<label for="">My ID:</label>
+			</div>
+			<div class="col-xs-8">
+				<input class="form-control" type="text" ng-model="flickr.apisObj.id" placeholder="John Do'h" required>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<label for="">Flickr API Key: </label>
+			</div>
+			<div class="col-xs-8">
+				<div class="row">
+					<div class="col-xs-6">
+						<input class="form-control" type="password" ng-model="flickr.apisObj.flickrKey" placeholder="XXXXXX">
 					</div>
-					<div class="col-sm-4">
-						<select class="form-control trans-select" ng-model="flickr.lang" ng-options="item.label for item in flickr.langs">
-						</select>
+					<div class="col-xs-6">
+						<a target="_blank" href="https://www.flickr.com/services/apps/create/">Get one here!</a>
 					</div>
 				</div>
-				<div class="row" id="filter-section">
-					<div class="col-sm-8">
-						<label>Strictly Outdoor:</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<label for="">Google Maps API Key: </label>
+			</div>
+			<div class="col-xs-8">
+				<div class="row">
+					<div class="col-xs-6">
+						<input class="form-control" type="password" ng-model="flickr.apisObj.mapsKey" placeholder="XXXXXX">
 					</div>
-					<div class="col-sm-4 filter-checkbox">
-						<input title="Hint: Toggle this off when making searches in non-English languages." type="checkbox" name="" id="" ng-model="flickr.outdoor">
+					<div class="col-xs-6">
+						<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get one here!</a>
 					</div>
 				</div>
-				<div class="input-group">
-					<input class="form-control search-form" ng-model="flickr.tag" type="text" placeholder="Search by tag">
-					<span class="input-group-btn">
-					<input type="button" class="btn btn-default" value="Translate!" ng-click="flickr.translate(flickr.tag, flickr.lang.value)">
-					<input class="btn btn-default" type="submit" value="Go!">			
-					</span>			
-				</div>	
-			</form>		
+			</div>
 		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<label for="">Yandex Translate API Key:</label>
+			</div>
+			<div class="col-xs-8">
+				<div class="row">
+					<div class="col-xs-6">
+						<input class="form-control" type="password" ng-model="flickr.apisObj.translateKey" placeholder="XXXXXX">
+					</div>
+					<div class="col-xs-6">
+						<a target="_blank" href="https://tech.yandex.com/translate/">Get one here!</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button class="btn btn-primary" ng-click="flickr.submitLogInfo(flickr.apisObj)">Submit</button>
 	</section>
-	<section class="results-section" id="results-section">
-		<div ng-if="flickr.notifySearch && flickr.tag" class="notify notify-searching">Searching Flickr for photos tagged with {{ flickr.tagToSearch }}.</div>
-		<div ng-if="flickr.notifySearch && !flickr.tag" class="notify notify-searching">Searching Flickr.</div>
-		<div ng-if="flickr.error" class="notify notify-error">Sorry, an error occured.</div>
-		<div ng-if="flickr.notifyResults && flickr.tagToSearch" class="notify notify-results">We found {{ flickr.results.length }} results for {{ flickr.tagToSearch }}.</div>
-		<!-- If an empty-bar search.. -->
-		<div ng-if="flickr.notifyResults && !flickr.tagToSearch" class="notify notify-results">We found {{ flickr.results.length }} results.</div>
-		<div ng-show="myForm.$submitted" ng-repeat="result in flickr.results" class="results">
-			<a target="_blank" href="//www.flickr.com/photos/{{ result.owner }}/{{ result.id }}"><img ng-src="//farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture"></a>
-		</div>
+	<section ng-if="!flickr.needsAuth" id="app">
+		<section id="directions">
+			<p id="greeting">Hello {{flickr.apisObj.id}}!</p>
+			<button class="btn btn-default" ng-click="flickr.resetLogInfo()">Update Info</button>
+			<p>Search by box selection to find pictures of the great outdoors in different areas around the globe!</p>
+		</section>
+		<section class="row search-section">
+			<div class="col-md-12">
+				<form id="search-term" name="myForm" ng-submit="flickr.searchFlickr(flickr.tag, flickr.points)">
+					<div class="row" id="lang-section">
+						<div class="col-sm-8">
+							<label>Select Language: </label>
+						</div>
+						<div class="col-sm-4">
+							<select class="form-control trans-select" ng-model="flickr.lang" ng-options="item.label for item in flickr.langs">
+							</select>
+						</div>
+					</div>
+					<div class="row" id="filter-section">
+						<div class="col-sm-8">
+							<label>Strictly Outdoor:</label>
+						</div>
+						<div class="col-sm-4 filter-checkbox">
+							<input title="Hint: Toggle this off when making searches in non-English languages." type="checkbox" name="" id="" ng-model="flickr.outdoor">
+						</div>
+					</div>
+					<div class="input-group">
+						<input class="form-control search-form" ng-model="flickr.tag" type="text" placeholder="Search by tag">
+						<span class="input-group-btn">
+						<input type="button" class="btn btn-default" value="Translate!" ng-click="flickr.translate(flickr.tag, flickr.lang.value)">
+						<input class="btn btn-default" type="submit" value="Go!">			
+						</span>			
+					</div>	
+				</form>		
+			</div>
+		</section>
+		<section class="results-section" id="results-section">
+			<div ng-if="flickr.notifySearch && flickr.tag" class="notify notify-searching">Searching Flickr for photos tagged with {{ flickr.tagToSearch }}.</div>
+			<div ng-if="flickr.notifySearch && !flickr.tag" class="notify notify-searching">Searching Flickr.</div>
+			<div ng-if="flickr.error" class="notify notify-error">Sorry, an error occured.</div>
+			<div ng-if="flickr.notifyResults && flickr.tagToSearch" class="notify notify-results">We found {{ flickr.results.length }} results for {{ flickr.tagToSearch }}.</div>
+			<!-- If an empty-bar search.. -->
+			<div ng-if="flickr.notifyResults && !flickr.tagToSearch" class="notify notify-results">We found {{ flickr.results.length }} results.</div>
+			<div ng-show="myForm.$submitted" ng-repeat="result in flickr.results" class="results">
+				<a target="_blank" href="//www.flickr.com/photos/{{ result.owner }}/{{ result.id }}"><img ng-src="//farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture"></a>
+			</div>
+		</section>
 	</section>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -81,8 +145,6 @@
 	<script src="apps/app.js"></script>
 	<script src="components/library.js"></script>
 	<script src="modals/emptyFieldModalController.js"></script>
-	<script src="modals/initModalController.js"></script>
-	<script src="modals/updateModalController.js"></script>
 	<!-- endbuild -->
 </body>
 </html>

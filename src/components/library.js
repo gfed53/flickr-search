@@ -277,17 +277,17 @@
 	}
 
 	function flInitAPIs($q, flModalGenerator){
-		var initTemp = {
-			templateUrl: './modals/init-modal.html',
-			controller: 'InitModalController',
-			controllerAs: 'initModal'
-		};
+		// var initTemp = {
+		// 	templateUrl: './modals/init-modal.html',
+		// 	controller: 'InitModalController',
+		// 	controllerAs: 'initModal'
+		// };
 
-		var updateTemp = {
-			templateUrl: './modals/update-modal.html',
-			controller: 'UpdateModalController',
-			controllerAs: 'updateModal'
-		};
+		// var updateTemp = {
+		// 	templateUrl: './modals/update-modal.html',
+		// 	controller: 'UpdateModalController',
+		// 	controllerAs: 'updateModal'
+		// };
 
 		this.apisObj = {
 			id: 'New User'
@@ -297,48 +297,33 @@
 		this.update = update;
 		this.updateMapsScript = updateMapsScript;
 
-		function check(){
-			var deferred = $q.defer();
+		function check(mapsCB){
 			//Checking localStorage to see if user has an id with saved API keys
 			if(localStorage['flckr-log-info']){
 				var obj = JSON.parse(localStorage['flckr-log-info']);
 				this.apisObj = obj;
 				//Updating the DOM (for the Google Maps API)
 				updateDOM(this.apisObj.mapsKey);
-				deferred.resolve(this.apisObj);
+				mapsCB();
+				return false;
 			} else {
-				flModalGenerator().openModal(initTemp)
-				.then((result)=>{
-					if(result === 'cancel'){
-						//Do nothing
-					} else {
-						localStorage.setItem('flckr-log-info', JSON.stringify(result));
-						this.apisObj = localStorage['flckr-log-info'];
-						updateDOM(this.apisObj.mapsKey);
+				return true;
+				// localStorage.setItem('flckr-log-info', JSON.stringify(result));
+				// this.apisObj = localStorage['flckr-log-info'];
+				// updateDOM(this.apisObj.mapsKey);
 
-						//Refresh page to enable g maps to work
-						//If I add a separate success modal, we will move this to that callback.
-						location.reload();
-					}
-				});
+				// //Refresh page to enable g maps to work
+				// location.reload();
 			}
-			return deferred.promise;
 		}
 
 		function update(){
-			flModalGenerator().openModal(updateTemp)
-			.then((result)=>{
-				if(result === 'cancel'){
-					//Do nothing
-				} else {
-					localStorage.setItem('flckr-log-info', JSON.stringify(result));
-					this.apisObj = localStorage['flckr-log-info'];
-					updateDOM(this.apisObj.mapsKey);
+			localStorage.setItem('flckr-log-info', JSON.stringify(result));
+			this.apisObj = localStorage['flckr-log-info'];
+			updateDOM(this.apisObj.mapsKey);
 
-					//Refresh page to enable g maps to work
-					location.reload();
-				}
-			});
+			//Refresh page to enable g maps to work
+			location.reload();
 		}
 
 		function updateDOM(key){
