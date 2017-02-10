@@ -317,8 +317,8 @@
 			}
 		}
 
-		function update(){
-			localStorage.setItem('flckr-log-info', JSON.stringify(result));
+		function update(obj){
+			localStorage.setItem('flckr-log-info', JSON.stringify(obj));
 			this.apisObj = localStorage['flckr-log-info'];
 			updateDOM(this.apisObj.mapsKey);
 
