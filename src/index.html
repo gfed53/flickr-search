@@ -20,71 +20,83 @@
 		<h1>Flickr 'round the World</h1>
 		<p>By Gregory Federico. 2016</p>
 	</header>
-	<section id="map">
-	</section>
+	<!-- <section id="map">
+	</section> -->
 	<!-- User Authentication Section -->
 	<section ng-if="flickr.needsAuth" id="user-auth">
-		<p>Hello new user..</p>
-		<p>Before using this app, create an ID and submit the necessary API keys to get the search engine running.</p>
-		<div>
-			<a target="_blank" href="https://en.wikipedia.org/wiki/Application_programming_interface_key">What is an API key?</a>
-		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<label for="">My ID:</label>
-			</div>
-			<div class="col-xs-8">
-				<input class="form-control" type="text" ng-model="flickr.apisObj.id" placeholder="John Do'h" required>
+		<div id="user-auth-header">
+			<h2>Hello new user..</h2>
+			<p>Before using this app, create an ID and submit the necessary API keys to get the search engine running.</p>
+			<div>
+				<a target="_blank" href="https://en.wikipedia.org/wiki/Application_programming_interface_key">What is an API key?</a>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<label for="">Flickr API Key: </label>
-			</div>
-			<div class="col-xs-8">
-				<div class="row">
-					<div class="col-xs-6">
-						<input class="form-control" type="password" ng-model="flickr.apisObj.flickrKey" placeholder="XXXXXX">
+		<div class="user-auth-container">
+			<div class="row">
+				<div class="col-xs-4">
+					<label for="">My ID:</label>
+				</div>
+				<div class="col-xs-8">
+					<div class="row">
+						<div class="col-xs-6">
+							<input class="form-control" type="text" ng-model="flickr.apisObj.id" placeholder="John Do'h" required>
+						</div>
 					</div>
-					<div class="col-xs-6">
-						<a target="_blank" href="https://www.flickr.com/services/apps/create/">Get one here!</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-4">
+					<label for="">Flickr API Key: </label>
+				</div>
+				<div class="col-xs-8">
+					<div class="row">
+						<div class="col-xs-6">
+							<input class="form-control" type="password" ng-model="flickr.apisObj.flickrKey" placeholder="XXXXXX">
+						</div>
+						<div class="col-xs-6 api-link">
+							<a target="_blank" href="https://www.flickr.com/services/apps/create/">Get one here!</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-4">
+					<label for="">Google Maps API Key: </label>
+				</div>
+				<div class="col-xs-8">
+					<div class="row">
+						<div class="col-xs-6">
+							<input class="form-control" type="password" ng-model="flickr.apisObj.mapsKey" placeholder="XXXXXX">
+						</div>
+						<div class="col-xs-6 api-link">
+							<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get one here!</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-4">
+					<label for="">Yandex Translate API Key:</label>
+				</div>
+				<div class="col-xs-8">
+					<div class="row">
+						<div class="col-xs-6">
+							<input class="form-control" type="password" ng-model="flickr.apisObj.translateKey" placeholder="XXXXXX">
+						</div>
+						<div class="col-xs-6 api-link">
+							<a target="_blank" href="https://tech.yandex.com/translate/">Get one here!</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<label for="">Google Maps API Key: </label>
-			</div>
-			<div class="col-xs-8">
-				<div class="row">
-					<div class="col-xs-6">
-						<input class="form-control" type="password" ng-model="flickr.apisObj.mapsKey" placeholder="XXXXXX">
-					</div>
-					<div class="col-xs-6">
-						<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get one here!</a>
-					</div>
-				</div>
-			</div>
+		<div id="user-auth-footer">
+			<button class="btn btn-primary" ng-click="flickr.submitLogInfo(flickr.apisObj)">Submit</button>
 		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<label for="">Yandex Translate API Key:</label>
-			</div>
-			<div class="col-xs-8">
-				<div class="row">
-					<div class="col-xs-6">
-						<input class="form-control" type="password" ng-model="flickr.apisObj.translateKey" placeholder="XXXXXX">
-					</div>
-					<div class="col-xs-6">
-						<a target="_blank" href="https://tech.yandex.com/translate/">Get one here!</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<button class="btn btn-primary" ng-click="flickr.submitLogInfo(flickr.apisObj)">Submit</button>
 	</section>
 	<section ng-if="!flickr.needsAuth" id="app">
+	<section id="map">
+	</section>
 		<section id="directions">
 			<p id="greeting">Hello {{flickr.apisObj.id}}!</p>
 			<button class="btn btn-default" ng-click="flickr.resetLogInfo()">Update Info</button>

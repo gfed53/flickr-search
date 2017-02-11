@@ -18,6 +18,15 @@ header h1 {
 	margin: 0;
 }
 
+#user-auth #user-auth-header, #user-auth #user-auth-footer, .api-link  {
+	text-align: center;
+}
+
+#user-auth .user-auth-container {
+	margin: 1em;
+}
+
+
 #map {
 	height: 30em;
 	width: 100%;
