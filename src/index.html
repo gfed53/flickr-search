@@ -25,9 +25,9 @@
 	<!-- User Authentication Section -->
 	<section ng-if="flickr.needsAuth" id="user-auth">
 		<div id="user-auth-header">
-			<h2>Hello new user..</h2>
-			<p>Before using this app, create an ID and submit the necessary API keys to get the search engine running.</p>
-			<div>
+			<h2>Hello {{ flickr.userName }}..</h2>
+			<div ng-if="!flickr.reqReset">
+				<p>Before using this app, create an ID and submit the necessary API keys to get the search engine running.</p>
 				<a target="_blank" href="https://en.wikipedia.org/wiki/Application_programming_interface_key">What is an API key?</a>
 			</div>
 		</div>
@@ -140,9 +140,14 @@
 			<div ng-if="flickr.notifyResults && flickr.tagToSearch" class="notify notify-results">We found {{ flickr.results.length }} results for {{ flickr.tagToSearch }}.</div>
 			<!-- If an empty-bar search.. -->
 			<div ng-if="flickr.notifyResults && !flickr.tagToSearch" class="notify notify-results">We found {{ flickr.results.length }} results.</div>
-			<div ng-show="myForm.$submitted" ng-repeat="result in flickr.results" class="results">
-				<a target="_blank" href="//www.flickr.com/photos/{{ result.owner }}/{{ result.id }}"><img ng-src="//farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture"></a>
+			<div ng-if="flickr.results">
+				<div ng-repeat="result in flickr.results" class="results">
+					<a target="_blank" href="//www.flickr.com/photos/{{ result.owner }}/{{ result.id }}"><img ng-src="//farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture"></a>
+				</div>
 			</div>
+			<!-- <div ng-show="myForm.$submitted" ng-repeat="result in flickr.results" class="results">
+				<a target="_blank" href="//www.flickr.com/photos/{{ result.owner }}/{{ result.id }}"><img ng-src="//farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture"></a>
+			</div> -->
 		</section>
 	</section>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

@@ -297,14 +297,14 @@
 		this.update = update;
 		this.updateMapsScript = updateMapsScript;
 
-		function check(mapsCB){
+		function check(cb){
 			//Checking localStorage to see if user has an id with saved API keys
 			if(localStorage['flckr-log-info']){
 				var obj = JSON.parse(localStorage['flckr-log-info']);
 				this.apisObj = obj;
 				//Updating the DOM (for the Google Maps API)
 				updateDOM(this.apisObj.mapsKey);
-				mapsCB();
+				cb();
 				return false;
 			} else {
 				return true;

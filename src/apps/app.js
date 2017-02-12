@@ -20,6 +20,7 @@
 		vm.submitLogInfo = submitLogInfo;
 		vm.resetLogInfo = resetLogInfo;
 		vm.cancelReset = cancelReset;
+		vm.userName = "New User";
 
 		$location.url('/');
 
@@ -28,6 +29,7 @@
 
 		vm.needsAuth = flInitAPIs.check(() => {
 			vm.apisObj = flInitAPIs.apisObj;
+			vm.userName = flInitAPIs.apisObj.id;
 			$timeout(()=>{
 				vm.initMap();
 			}, 1200);
