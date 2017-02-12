@@ -92,6 +92,7 @@
 		</div>
 		<div id="user-auth-footer">
 			<button class="btn btn-primary" ng-click="flickr.submitLogInfo(flickr.apisObj)">Submit</button>
+			<button ng-if="flickr.reqReset" class="btn btn-warning" ng-click="flickr.cancelReset()">Cancel</button>
 		</div>
 	</section>
 	<section ng-if="!flickr.needsAuth" id="app">

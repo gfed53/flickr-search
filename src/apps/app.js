@@ -2,12 +2,8 @@
 
 	angular.module('FlickrApp', ['ngAnimate', 'ui.bootstrap'])
 
-	.run(['$timeout', '$rootScope', 'flInitAPIs', function($timeout, $rootScope, flInitAPIs){
-		// flInitAPIs.check()
-		// .then(() => {
-		// 	//Do Nothing
-		// })
-	}])
+	// .run(['$timeout', '$rootScope', 'flInitAPIs', function($timeout, $rootScope, flInitAPIs){
+	// }])
 
 	.controller('FlickrCtrl', ['$scope', '$timeout', '$location', 'flInitMap', 'flSearchFlickr', 'flTranslate', 'flFilters', 'flScrollTo', 'flInitAPIs', FlickrCtrl]);
 
@@ -23,6 +19,7 @@
 		vm.scrollTo = scrollTo;
 		vm.submitLogInfo = submitLogInfo;
 		vm.resetLogInfo = resetLogInfo;
+		vm.cancelReset = cancelReset;
 
 		$location.url('/');
 
@@ -35,10 +32,6 @@
 				vm.initMap();
 			}, 1200);
 		});
-
-		// $timeout(()=>{
-		// 	vm.initMap();
-		// }, 1200);
 		
 		function initMap() {
 			var mapObj = flInitMap().init(update);
@@ -97,11 +90,19 @@
 
 		function submitLogInfo(obj){
 			flInitAPIs.update(obj);
-			// vm.needsAuth = false;
 		}
 
 		function resetLogInfo(){
 			vm.needsAuth = true;
+			vm.reqReset = true;
+		}
+
+		function cancelReset(){
+			vm.needsAuth = false;
+			vm.reqReset = false;
+			$timeout(()=>{
+				vm.initMap();
+			}, 700);
 		}
 	}
 })();
