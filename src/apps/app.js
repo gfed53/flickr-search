@@ -2,9 +2,6 @@
 
 	angular.module('FlickrApp', ['ngAnimate', 'ui.bootstrap'])
 
-	// .run(['$timeout', '$rootScope', 'flInitAPIs', function($timeout, $rootScope, flInitAPIs){
-	// }])
-
 	.controller('FlickrCtrl', ['$scope', '$timeout', '$location', 'flInitMap', 'flSearchFlickr', 'flTranslate', 'flFilters', 'flScrollTo', 'flInitAPIs', FlickrCtrl]);
 
 

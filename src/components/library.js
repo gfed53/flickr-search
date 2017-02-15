@@ -277,17 +277,6 @@
 	}
 
 	function flInitAPIs($q, flModalGenerator){
-		// var initTemp = {
-		// 	templateUrl: './modals/init-modal.html',
-		// 	controller: 'InitModalController',
-		// 	controllerAs: 'initModal'
-		// };
-
-		// var updateTemp = {
-		// 	templateUrl: './modals/update-modal.html',
-		// 	controller: 'UpdateModalController',
-		// 	controllerAs: 'updateModal'
-		// };
 
 		this.apisObj = {
 			id: 'New User'
@@ -308,12 +297,6 @@
 				return false;
 			} else {
 				return true;
-				// localStorage.setItem('flckr-log-info', JSON.stringify(result));
-				// this.apisObj = localStorage['flckr-log-info'];
-				// updateDOM(this.apisObj.mapsKey);
-
-				// //Refresh page to enable g maps to work
-				// location.reload();
 			}
 		}
 

@@ -20,8 +20,6 @@
 		<h1>Flickr 'round the World</h1>
 		<p>By Gregory Federico. 2016</p>
 	</header>
-	<!-- <section id="map">
-	</section> -->
 	<!-- User Authentication Section -->
 	<section ng-if="flickr.needsAuth" id="user-auth">
 		<div id="user-auth-header">
@@ -145,9 +143,6 @@
 					<a target="_blank" href="//www.flickr.com/photos/{{ result.owner }}/{{ result.id }}"><img ng-src="//farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture"></a>
 				</div>
 			</div>
-			<!-- <div ng-show="myForm.$submitted" ng-repeat="result in flickr.results" class="results">
-				<a target="_blank" href="//www.flickr.com/photos/{{ result.owner }}/{{ result.id }}"><img ng-src="//farm{{ result.farm }}.staticflickr.com/{{ result.server }}/{{ result.id }}_{{ result.secret }}.jpg" alt="picture"></a>
-			</div> -->
 		</section>
 	</section>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
