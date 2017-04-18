@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
 	<link rel="stylesheet" href="../lib/ui-bootstrap/ui-bootstrap-csp.css">
 	<link href="//fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.min.css">
 	<!-- build:css ./_assets/combined.css -->
 	<link rel="stylesheet" href="styles/styles.css" />
 	<!-- endbuild -->
@@ -18,7 +19,8 @@
 <body ng-controller="FlickrCtrl as flickr">
 	<header class="masthead">
 		<h1>Flickr 'round the World</h1>
-		<p>By Gregory Federico. 2016</p>
+		<p>By <a target="_blank" href="http://www.gregoryfederico.com">Gregory Federico</a>. 2016</p>
+		<p>My GitHub: <a target="_blank" href="https://github.com/gfed53"><i class="fa fa-github"></i></a></p>
 	</header>
 	<!-- User Authentication Section -->
 	<section ng-if="flickr.needsAuth" id="user-auth">
