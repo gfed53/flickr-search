@@ -1,3 +1,5 @@
+// jshint esversion: 6
+
 (function(){
 	angular.module('FlickrApp')
 
@@ -69,7 +71,7 @@
 				api_key: '',
 				tags: '-people, -portrait, '+tagList,
 				tag_mode: 'all', //Results will have ALL tags user selects in search (not ANY tags) This is to keep it nature-based.
-				bbox: points.west+', '+points.south+', '+points.east+', '+points.north,
+				bbox: points.west+', '+points.north+', '+points.east+', '+points.south,
 				safe_search: 1,
 				format: 'json',
 				nojsoncallback: 1
@@ -107,15 +109,15 @@
 						getResults()
 						.then(function(results){
 							deferred.resolve(results);
-						})
+						});
 					}, function(){
 						deferred.reject();
-					})
+					});
 				} else {
 					getResults()
 					.then(function(results){
 						deferred.resolve(results);
-					})
+					});
 				}
 
 				return deferred.promise;
@@ -185,8 +187,8 @@
 			.then(function(response){
 				return $q.when(response);
 			}, function(){
-				alert('Error retrieving translation. Did you select a language?')
-			})
+				alert('Error retrieving translation. Did you select a language?');
+			});
 		}
 
 		this.langs = langs;
@@ -212,7 +214,7 @@
 			var services = {
 				scrollToElement: scrollToElement,
 				checkScrollBtnStatus: checkScrollBtnStatus
-			}
+			};
 
 			return services;
 
@@ -234,7 +236,7 @@
 					return false;
 				}
 			}	
-		}
+		};
 	}
 
 	function flModalGenerator($q, $uibModal){
@@ -249,7 +251,7 @@
 				templateUrl: './modals/empty-field-modal.html',
 				controller: 'emptyFieldModalController',
 				controllerAs: 'emptyFieldModal'
-			}
+			};
 
 			function openModal(modalObj){
 				var deferred = $q.defer();
@@ -273,7 +275,7 @@
 			}
 
 			return services;
-		}
+		};
 	}
 
 	function flInitAPIs($q, flModalGenerator){

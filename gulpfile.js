@@ -38,7 +38,7 @@ gulp.task('usemin', [ 'del' ], function(){
 		css: [ minifyCss(), 'concat' ],
 		js: [ ngmin(), uglify() ]
 	}))
-	.pipe(gulp.dest( paths.dist ))
+	.pipe(gulp.dest( paths.dist ));
 });
 
 gulp.task('build', ['usemin']);
