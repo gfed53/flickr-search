@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 
 var jshint = require('gulp-jshint');
+var babel = require('gulp-babel');
+var strip = require('gulp-strip-comments');
 var uglify = require('gulp-uglify');
 var ngmin = require('gulp-ngmin');
 var minifyHtml = require('gulp-minify-html');
@@ -36,7 +38,7 @@ gulp.task('usemin', [ 'del' ], function(){
 	gulp.src( paths.index )
 	.pipe(usemin({
 		css: [ minifyCss(), 'concat' ],
-		js: [ ngmin(), uglify() ]
+		js: [ strip(), babel({presets: ['es2015']}), ngmin(), uglify() ]
 	}))
 	.pipe(gulp.dest( paths.dist ));
 });
