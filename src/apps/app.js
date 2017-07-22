@@ -26,13 +26,12 @@
 		
 		vm.updateAPIs = flInitAPIs.update;
 
-		vm.needsAuth = flInitAPIs.check(() => {
+		(() => {
 			vm.apisObj = flInitAPIs.apisObj;
-			vm.userName = flInitAPIs.apisObj.id;
 			$timeout(()=>{
 				vm.initMap();
 			}, 1200);
-		});
+		})();
 		
 		function initMap() {
 			var mapObj = flInitMap().init(update);

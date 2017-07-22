@@ -22,85 +22,10 @@
 		<p>By <a target="_blank" href="http://www.gregoryfederico.com">Gregory Federico</a>. 2016</p>
 		<p>My GitHub: <a target="_blank" href="https://github.com/gfed53"><i class="fa fa-github"></i></a></p>
 	</header>
-	<!-- User Authentication Section -->
-	<section ng-if="flickr.needsAuth" id="user-auth">
-		<div id="user-auth-header">
-			<h2>Hello {{ flickr.userName }}..</h2>
-			<div ng-if="!flickr.reqReset">
-				<p>Before using this app, create an ID and submit the necessary API keys to get the search engine running.</p>
-				<a target="_blank" href="https://en.wikipedia.org/wiki/Application_programming_interface_key">What is an API key?</a>
-			</div>
-		</div>
-		<div class="user-auth-container">
-			<div class="api-auth-section row">
-				<div class="api-label col-sm-4">
-					<label for="">My ID:</label>
-				</div>
-				<div class="col-sm-8">
-					<div class="row">
-						<div class="col-sm-6">
-							<input class="form-control" type="text" ng-model="flickr.apisObj.id" placeholder="John Do'h" required>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="api-auth-section row">
-				<div class="api-label col-sm-4">
-					<label for="">Flickr API Key: </label>
-				</div>
-				<div class="col-sm-8">
-					<div class="row">
-						<div class="col-sm-6">
-							<input class="form-control" type="password" ng-model="flickr.apisObj.flickrKey" placeholder="XXXXXX">
-						</div>
-						<div class="col-sm-6 api-link">
-							<a target="_blank" href="https://www.flickr.com/services/apps/create/">Get one here!</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="api-auth-section row">
-				<div class="api-label col-sm-4">
-					<label for="">Google Maps API Key: </label>
-				</div>
-				<div class="col-sm-8">
-					<div class="row">
-						<div class="col-sm-6">
-							<input class="form-control" type="password" ng-model="flickr.apisObj.mapsKey" placeholder="XXXXXX">
-						</div>
-						<div class="col-sm-6 api-link">
-							<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get one here!</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="api-auth-section row">
-				<div class="api-label col-sm-4">
-					<label for="">Yandex Translate API Key:</label>
-				</div>
-				<div class="col-sm-8">
-					<div class="row">
-						<div class="col-sm-6">
-							<input class="form-control" type="password" ng-model="flickr.apisObj.translateKey" placeholder="XXXXXX">
-						</div>
-						<div class="col-sm-6 api-link">
-							<a target="_blank" href="https://tech.yandex.com/translate/">Get one here!</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="user-auth-footer">
-			<button class="btn btn-primary" ng-click="flickr.submitLogInfo(flickr.apisObj)">Submit</button>
-			<button ng-if="flickr.reqReset" class="btn btn-warning" ng-click="flickr.cancelReset()">Cancel</button>
-		</div>
-	</section>
 	<section ng-if="!flickr.needsAuth" id="app">
 	<section id="map">
 	</section>
 		<section id="directions">
-			<p id="greeting">Hello {{flickr.apisObj.id}}!</p>
-			<button class="btn btn-default" ng-click="flickr.resetLogInfo()">Update Info</button>
 			<p>Search by box selection to find pictures of the great outdoors in different areas around the globe!</p>
 		</section>
 		<section class="row search-section">
@@ -154,8 +79,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-animate.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.3.1/ui-bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.3.1/ui-bootstrap-tpls.min.js"></script>
-	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.2/ui-bootstrap.js"></script> -->
-	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.js"></script> -->
 	<!-- build:js ./_assets/combined.js -->
 	<script src="apps/app.js"></script>
 	<script src="components/library.js"></script>

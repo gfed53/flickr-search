@@ -281,12 +281,16 @@
 	function flInitAPIs($q, flModalGenerator){
 
 		this.apisObj = {
-			id: 'New User'
+			flickrKey: 'XXXXXX FLICKR API KEY',
+			mapsKey: 'XXXXXX GOOGLE API KEY',
+			translateKey: 'XXXXXX YANDEX TRANSLATE API KEY'
 		};
 
 		this.check = check;
 		this.update = update;
 		this.updateMapsScript = updateMapsScript;
+
+		updateDOM(this.apisObj.mapsKey);
 
 		function check(cb){
 			//Checking localStorage to see if user has an id with saved API keys
