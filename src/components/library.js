@@ -9,7 +9,7 @@
 	.factory('flModalGenerator', ['$q', '$uibModal', flModalGenerator])
 	.service('flTranslate', ['$http', '$q', 'flInitAPIs', flTranslate])
 	.service('flFilters', [flFilters])
-	.service('flInitAPIs', ['$q', 'flModalGenerator', flInitAPIs]);
+	.service('flInitAPIs', ['$http', '$q', 'flModalGenerator', 'flInitMap', flInitAPIs]);
 
 	//Initializes our map
 	function flInitMap(){
@@ -278,19 +278,34 @@
 		};
 	}
 
-	function flInitAPIs($q, flModalGenerator){
-
-		this.apisObj = {
-			flickrKey: 'XXXXXX FLICKR API KEY',
-			mapsKey: 'XXXXXX GOOGLE API KEY',
-			translateKey: 'XXXXXX YANDEX TRANSLATE API KEY'
-		};
-
+	function flInitAPIs($http, $q, flModalGenerator, flInitMap){
+		
+		this.init = init;
 		this.check = check;
 		this.update = update;
 		this.updateMapsScript = updateMapsScript;
 
-		updateDOM(this.apisObj.mapsKey);
+		function init(){
+			var deferred = $q.defer();
+			initKeys()
+			.then((data)=> {
+				this.apisObj = data;
+				updateDOM(this.apisObj.mapsKey)
+				.then(()=> {
+					deferred.resolve();
+				});
+				
+			});
+
+			return deferred.promise;
+		}
+
+		function initKeys(){
+			return $http.get('/access')
+					.then((res) => {
+						return res.data;
+					});
+		}
 
 		function check(cb){
 			//Checking localStorage to see if user has an id with saved API keys
@@ -316,22 +331,34 @@
 		}
 
 		function updateDOM(key){
+			var deferred = $q.defer();
 			if(key){
-				updateMaps(key);
+				updateMaps(key)
+				.then(()=>{
+					deferred.resolve();
+				});
 			} else {
 				updateMaps('');
 			}
+
+			return deferred.promise;
+
 		}
 
 		//Construct url with saved Google Maps API key, then run loadScript()
 		function updateMaps(key){
+			var deferred = $q.defer();
 			var src = 'https://maps.googleapis.com/maps/api/js?key='+key;
 			loadScript(src)
 			.then(() => {
 				//Success
+				deferred.resolve();
 			}, ()=> {
 				//Error
+				deferred.reject();
 			});
+
+			return deferred.promise;
 
 		}
 

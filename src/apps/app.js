@@ -6,6 +6,7 @@
 
 	.controller('FlickrCtrl', ['$scope', '$timeout', '$location', 'flInitMap', 'flSearchFlickr', 'flTranslate', 'flFilters', 'flScrollTo', 'flInitAPIs', FlickrCtrl]);
 
+	
 
 	function FlickrCtrl ($scope, $timeout, $location, flInitMap, flSearchFlickr, flTranslate, flFilters, flScrollTo, flInitAPIs){
 		var vm = this;
@@ -26,12 +27,10 @@
 		
 		vm.updateAPIs = flInitAPIs.update;
 
-		(() => {
-			vm.apisObj = flInitAPIs.apisObj;
-			$timeout(()=>{
-				vm.initMap();
-			}, 1200);
-		})();
+		flInitAPIs.init()
+		.then(()=>{
+			vm.initMap();
+		});
 		
 		function initMap() {
 			var mapObj = flInitMap().init(update);
