@@ -9,11 +9,13 @@ var minifyHtml = require('gulp-minify-html');
 var minifyCss = require('gulp-minify-css');
 var usemin = require('gulp-usemin');
 var del = require('del');
+var runSequence = require('run-sequence');
 
 var paths = {
 	scripts: 'src/**/*.js',
 	styles: './src/styles',
 	index: './src/index.html',
+	lib: './src/lib/**/*',
 	dist: './dist/'
 };
 
@@ -26,16 +28,21 @@ gulp.task('jshint', function(){
 
 // Watch
 gulp.task('watch', function(){
-	gulp.watch(paths.scripts, ['jshint']);
+	return gulp.watch(paths.scripts, ['jshint']);
 });
 
 // Build Dist
 gulp.task('del', function(){
-	del(paths.dist);
+	return del(paths.dist);
 });
 
-gulp.task('usemin', [ 'del' ], function(){
-	gulp.src( paths.index )
+gulp.task('copy', function(){
+	return gulp.src(paths.lib)
+	.pipe(gulp.dest(paths.dist+'lib'));
+});
+
+gulp.task('usemin', function(){
+	return gulp.src( paths.index )
 	.pipe(usemin({
 		css: [ minifyCss(), 'concat' ],
 		js: [ strip(), babel({presets: ['es2015']}), ngmin(), uglify() ]
@@ -43,7 +50,17 @@ gulp.task('usemin', [ 'del' ], function(){
 	.pipe(gulp.dest( paths.dist ));
 });
 
-gulp.task('build', ['usemin']);
+// gulp.task('build', ['usemin']);
+
+gulp.task('build', function(){
+	runSequence(
+		'del',
+		'copy',
+		'usemin'
+		);
+});
+
+
 
 // Default Task
 gulp.task('default', ['jshint', 'watch']);
