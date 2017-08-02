@@ -1,5 +1,13 @@
 # Flickr 'round the World
 
+## Live Demo
+
+Here is a [live demo version](http://flickr-search-96860.herokuapp.com/) that you can jump right into and use. If you want to create your own build and/or learn more about the process, continue reading.
+
+## About
+
+Flickr 'round the World retrieves search results from Flickr's API using GET requests via AngularJS's $http service. Previously known as just plain old Flickr Searcher, this app was reformatted and redesigned to incorporate the Google Maps API. It allows the user to select a portion of the world and search for nature-based photos specifically taken from that area.
+
 ## Build Instructions
 
 1. Make sure npm is installed, then in the terminal, run `npm i` to install all dependencies.
@@ -16,17 +24,11 @@
 
 3. Once all dependencies are installed and everything is in place, you can run `gulp build` in the command line to create a build version.
 
-4. You can serve the app locally by running `node server`. The app listens at port 8080.
-
-A new demo version is currently being created - with no API key insertion required - and a link will be supplied right here when it's usable.
-
-## About
-
-Flickr 'round the World retrieves search results from Flickr's API using GET requests via AngularJS's $http service. Previously known as just plain old Flickr Searcher, this app was reformatted and redesigned to incorporate the Google Maps API. It allows the user to select a portion of the world and search for nature-based photos specifically taken from that area.
+4. You can serve the app locally by running `npm start`. The app listens at port 8080.
 
 ## The Process
 
 Developing this app helped me learn more about API hacking using the AngularJS framework, as well as exploring the use of notifications throughout the search process which, utilizing scope, can be rendered and displayed within the view.
 
-A very important thing I learned while developing this app is that developers have to keep track of any changes in the APIs they use. Unbeknownst to me, some of the property names in the Flickr API had been changed, completely breaking the functionality of my app. It was an easy fix, simply updating the changed names, but it just goes to show that developers always have to keep track of any updates within their dependencies.
+A very important thing I learned while developing this app is that developers have to keep track of any changes in the APIs they use. Unbeknownst to me, some of the property names in the Flickr API had been changed, completely breaking the functionality of my app. It was an easy fix, simply updating the changed names, but it just goes to show that developers always have to keep track of any updates within their dependencies. (Edit: this happened more than once!)
 
